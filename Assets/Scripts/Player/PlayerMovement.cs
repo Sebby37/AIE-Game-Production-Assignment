@@ -25,7 +25,9 @@ public class PlayerMovement : MonoBehaviour
 {
     [Header("Player State Settings")]
     public PlayerMovementStates playerState = PlayerMovementStates.Still;
+    
     private Rigidbody2D rb;
+    private Animator animator;
     private SpriteRenderer spriteRenderer;
 
     [Header("Walking Settings")]
@@ -36,24 +38,39 @@ public class PlayerMovement : MonoBehaviour
     public float rollTime = 0.35f; // How long a roll will last in seconds
     public float rollSpeedMultiplier = 1.5f; // The speed multiplier at which the player rolls
     public float rollCooldown = 0.5f; // The time in seconds after a roll that the player cannot roll
+    
     float rollTimer = 0;
     float rollCooldownTimer = -1;
+
+    [Header("Attack Settings")]
+    public float damage = 1;
+    public float slashSpeed = 6;
+    public BoxCollider2D damageHitbox;
+
+    float slashTime;
+    float slashTimer = 0;
 
     // Start is called before the first frame update
     void Start()
     {
         rb = GetComponent<Rigidbody2D>();
+        animator = GetComponent<Animator>();
         spriteRenderer = rb.GetComponent<SpriteRenderer>();
+
+        slashTime = 1 / slashSpeed;
+        animator.SetFloat("Slash Speed", slashSpeed);
     }
 
     // Update is called once per frame
     void Update()
     {
+        SwordSlash();
+
         // Updating the player movement
         UpdatePlayerMovement4Directions();
 
         // Running roll code
-        Roll();
+        UpdateRoll();
 
         // Updating the player colour
         UpdatePlayerColour();
@@ -108,7 +125,7 @@ public class PlayerMovement : MonoBehaviour
     }
 
     // Function to roll
-    void Roll()
+    void UpdateRoll()
     {
         // Setting the player state to rolling if the Q key is pressed
         if (Input.GetKeyDown(KeyCode.Q))
@@ -159,5 +176,26 @@ public class PlayerMovement : MonoBehaviour
                 spriteRenderer.color = Color.green;
                 break;
         }
+    }
+
+    // TEMPORARY UNTIL PROPER SLASH SCRIPT IS WRITTEN
+    // Function to run sword slash code
+    void SwordSlash()
+    {
+        if (Input.GetMouseButtonDown(0) && playerState == PlayerMovementStates.Still)
+        {
+            playerState = PlayerMovementStates.Attacking;
+            animator.SetTrigger("Slash");
+        }
+        
+        // Enabling the damager hitbox based on whether the player is attacking
+        damageHitbox.enabled = (playerState == PlayerMovementStates.Attacking);
+
+        // Incrementing and resetting the slash timer depending on whether the player is attacking or not
+        slashTimer += (playerState == PlayerMovementStates.Attacking) ? Time.deltaTime : 0;
+        slashTimer = (playerState == PlayerMovementStates.Attacking) ? slashTimer : 0;
+
+        // Setting the player state depending on whether the slash timer is greater than the slash time
+        playerState = (playerState == PlayerMovementStates.Attacking && slashTimer >= slashTime) ? PlayerMovementStates.Still : playerState;
     }
 }
