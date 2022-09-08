@@ -50,6 +50,12 @@ public class PlayerMovement : MonoBehaviour
     float slashTime;
     float slashTimer = 0;
 
+    [Header("Spell Settings")]
+    public Transform castPoint;
+    public GameObject fireSpell;
+
+    GameObject currentSpell;
+
     // Start is called before the first frame update
     void Start()
     {
@@ -64,6 +70,10 @@ public class PlayerMovement : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
+        // Function to update the spell casting code
+        CastFireSpell();
+
+        // Function to update the sword slash code
         SwordSlash();
 
         // Updating the player movement
@@ -197,5 +207,31 @@ public class PlayerMovement : MonoBehaviour
 
         // Setting the player state depending on whether the slash timer is greater than the slash time
         playerState = (playerState == PlayerMovementStates.Attacking && slashTimer >= slashTime) ? PlayerMovementStates.Still : playerState;
+    }
+
+    // Function to cast a fire spell
+    void CastFireSpell()
+    {
+        // If the player is still and the cast button is pressed, the player state is set to casting and the spell is created
+        if (playerState == PlayerMovementStates.Still && Input.GetMouseButtonDown(1))
+        {
+            // Setting the player movement state to casting and instantiating the fire spell
+            playerState = PlayerMovementStates.Casting;
+            currentSpell = Instantiate(fireSpell, castPoint.position, transform.rotation);
+        }
+
+        // If the player is casting and the cast button is released, the spell is thrown and the player is set to still
+        if (playerState == PlayerMovementStates.Casting && Input.GetMouseButtonUp(1))
+        {
+            // Getting the FireSpell component and calling the throw function
+            FireSpell currentFire = currentSpell.GetComponent<FireSpell>();
+            currentFire.Throw();
+
+            // Clearing the currentSpell variable
+            currentSpell = null;
+
+            // Resetting the player movement state to still
+            playerState = PlayerMovementStates.Still;
+        }
     }
 }

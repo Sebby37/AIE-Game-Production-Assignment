@@ -36,7 +36,7 @@ public class Dummy : MonoBehaviour
     {
         // Currently there exists a bug where ontriggerstay/enter is called only when moving the collider after disabling/re-enabling it
         Debug.Log(collision.gameObject.name);
-        if (collision.gameObject.CompareTag("Player Damager") && !invulnerable)
+        if (collision.CompareTag("Player Damager") && !invulnerable)
         {
             Damage(1);
         }
