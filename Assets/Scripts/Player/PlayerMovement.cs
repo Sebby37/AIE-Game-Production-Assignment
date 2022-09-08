@@ -225,6 +225,7 @@ public class PlayerMovement : MonoBehaviour
         {
             // Getting the FireSpell component and calling the throw function
             FireSpell currentFire = currentSpell.GetComponent<FireSpell>();
+            currentFire.playerPosition = transform.position;
             currentFire.Throw();
 
             // Clearing the currentSpell variable

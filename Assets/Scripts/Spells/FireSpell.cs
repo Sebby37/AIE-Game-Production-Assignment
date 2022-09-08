@@ -10,11 +10,17 @@ public enum FireSpellState
 
 public class FireSpell : MonoBehaviour
 {
+    [Header("Cast Properties")]
+    public float minCastTime = 0.5f;
+    
     [Header("Projectile Behaviour")]
     public bool castByPlayer;
     public float speed = 3.0f;
     public float lifeTime = 5.0f;
 
+    public float curveTowardsMouseForce = 1.0f;
+
+    public Vector3 playerPosition;
     Rigidbody2D rb;
     float timeSinceCreation = 0.0f;
     FireSpellState state = FireSpellState.Casting;
@@ -46,23 +52,55 @@ public class FireSpell : MonoBehaviour
 
         // If the time since creation has exceeded the lifetime, the spell is destroyed
         if (timeSinceCreation > lifeTime) Destroy(gameObject);
+
+        // Curving towards the mouse if the fireball is thrown
+        if (state == FireSpellState.Thrown) CurveTowardMouse();
     }
 
     // Calls when gameObject collides with another object
     void OnCollisionEnter2D()
     {
-        Explosion();
+        Explode();
     }
 
     public void Throw()
     {
+        // Destroying the fireball if it has not existed for longer than the minimum cast time
+        if (timeSinceCreation < minCastTime) 
+        {
+            Destroy(gameObject, castSpeed);
+            animator.SetTrigger("Un-Cast");
+            return;
+        }
+        
+        // Adding a force to the fireball to throw it
         state = FireSpellState.Thrown;
         rb.AddForce(transform.up * speed, ForceMode2D.Impulse);
+        lifeTime += timeSinceCreation;
     }
 
     // Handles the fireball explosion
-    public void Explosion()
+    public void Explode()
     {
         Destroy(gameObject);
+    }
+
+    // Function to curve towards the mouse
+    void CurveTowardMouse() 
+    {
+        // Getting the mouse position as a world position
+        Vector3 mousePosition = Camera.main.ScreenToWorldPoint(Input.mousePosition);
+
+        // Calculating the vector direction to point towards the mouse
+        Vector2 towardsMouse = mousePosition - transform.position;
+        towardsMouse = towardsMouse.normalized;
+
+        // Calculating the distance between the points
+        float distanceToMouse = Vector3.Distance(playerPosition, transform.position);
+
+        Debug.Log($"Distance to Mouse: {distanceToMouse}");
+
+        // Adding a force to the fireball
+        rb.AddForce(towardsMouse * curveTowardsMouseForce * (1 / distanceToMouse));
     }
 }

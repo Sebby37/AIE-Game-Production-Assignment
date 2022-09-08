@@ -154,8 +154,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 5ec6e761988a0e94e8abbfe3fe64d992, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  minCastTime: 0.5
   castByPlayer: 0
   speed: 10
-  lifeTime: 5
+  lifeTime: 2
+  curveTowardsMouseForce: 2
+  playerPosition: {x: 0, y: 0, z: 0}
   castSpeed: 7
   idleSpeed: 1
