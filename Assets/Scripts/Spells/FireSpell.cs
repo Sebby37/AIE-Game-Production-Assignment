@@ -48,9 +48,21 @@ public class FireSpell : MonoBehaviour
         if (timeSinceCreation > lifeTime) Destroy(gameObject);
     }
 
+    // Calls when gameObject collides with another object
+    void OnCollisionEnter2D()
+    {
+        Explosion();
+    }
+
     public void Throw()
     {
         state = FireSpellState.Thrown;
         rb.AddForce(transform.up * speed, ForceMode2D.Impulse);
+    }
+
+    // Handles the fireball explosion
+    public void Explosion()
+    {
+        Destroy(gameObject);
     }
 }
