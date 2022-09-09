@@ -53,7 +53,7 @@ public class FireSpell : MonoBehaviour
         timeSinceCreation += Time.deltaTime;
 
         // If the time since creation has exceeded the lifetime, the spell is destroyed
-        if (timeSinceCreation > lifeTime) Destroy(gameObject);
+        if (timeSinceCreation > lifeTime && state != FireSpellState.Casting) Destroy(gameObject);
 
         // Curving towards the mouse if the fireball is thrown
         if (state == FireSpellState.Thrown) CurveTowardMouse();
@@ -75,7 +75,7 @@ public class FireSpell : MonoBehaviour
         {
             // Destroying and triggering the Un-Cast animation
             Destroy(gameObject, castSpeed);
-            animator.SetTrigger("Un-Cast");
+            if (animator != null) animator.SetTrigger("Un-Cast");
 
             // Returning from the function to prevent setting the state of the fireball
             return;
@@ -90,7 +90,7 @@ public class FireSpell : MonoBehaviour
     // Handles the fireball explosion
     public void Explode()
     {
-        Destroy(gameObject);//, Time.deltaTime * 2);
+        Destroy(gameObject);
     }
 
     // Function to curve towards the mouse
