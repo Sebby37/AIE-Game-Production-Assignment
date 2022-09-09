@@ -223,10 +223,17 @@ public class PlayerMovement : MonoBehaviour
         // If the player is casting and the cast button is released, the spell is thrown and the player is set to still
         if (playerState == PlayerMovementStates.Casting && Input.GetMouseButtonUp(1))
         {
-            // Getting the FireSpell component and calling the throw function
-            FireSpell currentFire = currentSpell.GetComponent<FireSpell>();
-            currentFire.playerPosition = transform.position;
-            currentFire.Throw();
+            // Throwing the FireBall if the variable is not null
+            if (currentSpell != null)
+            {
+                // Getting the FireSpell component and calling the throw function
+                FireSpell currentFire = currentSpell.GetComponent<FireSpell>();
+                currentFire.playerPosition = transform.position;
+                currentFire.Throw();
+
+                // Setting the FireSpell to be cast by the player
+                currentFire.castByPlayer = true;
+            }
 
             // Clearing the currentSpell variable
             currentSpell = null;

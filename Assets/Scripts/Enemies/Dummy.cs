@@ -34,11 +34,30 @@ public class Dummy : MonoBehaviour
 
     private void OnTriggerStay2D(Collider2D collision)
     {
+        // Returning if the dummy is invulnerable
+        if (invulnerable) return;
+
         // Currently there exists a bug where ontriggerstay/enter is called only when moving the collider after disabling/re-enabling it
         Debug.Log(collision.gameObject.name);
-        if (collision.CompareTag("Player Damager") && !invulnerable)
+
+        // If the dummy is in a player damager trigger
+        if (collision.CompareTag("Player Damager"))
         {
             Damage(1);
+        }
+    }
+
+    private void OnCollisionEnter2D(Collision2D collision)
+    {
+        // Returning if the dummy is already invulnerable
+        if (invulnerable) return;
+        
+        // If the dummy was hit by a fireball
+        if (collision.gameObject.CompareTag("Fire Ball"))
+        {
+            // Getting the FireSpell component and damaging the dummy based on it's damage variable
+            FireSpell fireBall = collision.gameObject.GetComponent<FireSpell>();
+            if (fireBall != null && fireBall.castByPlayer) Damage(fireBall.damage);
         }
     }
 

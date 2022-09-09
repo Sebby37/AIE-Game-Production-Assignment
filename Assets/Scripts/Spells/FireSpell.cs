@@ -10,13 +10,11 @@ public enum FireSpellState
 
 public class FireSpell : MonoBehaviour
 {
-    [Header("Cast Properties")]
-    public float minCastTime = 0.5f;
-    
     [Header("Projectile Behaviour")]
-    public bool castByPlayer;
+    public float damage = 2;
     public float speed = 3.0f;
     public float lifeTime = 5.0f;
+    public bool castByPlayer = false;
 
     public float curveTowardsMouseForce = 1.0f;
 
@@ -30,12 +28,16 @@ public class FireSpell : MonoBehaviour
     public float idleSpeed = 1.0f;
 
     Animator animator;
+    Collider2D fireCollider;
 
     // Start is called before the first frame update
     void Start()
     {
         // Getting the rigidbody of the fireball
         rb = GetComponent<Rigidbody2D>();
+
+        // Getting the collider component of the fireball
+        fireCollider = GetComponent<Collider2D>();
         
         // Setting animator values and running the cast animation
         animator = GetComponent<Animator>();
@@ -55,6 +57,9 @@ public class FireSpell : MonoBehaviour
 
         // Curving towards the mouse if the fireball is thrown
         if (state == FireSpellState.Thrown) CurveTowardMouse();
+
+        // Enabling / disabling the collider based on whether the fireball is thrown
+        fireCollider.enabled = (state == FireSpellState.Thrown);
     }
 
     // Calls when gameObject collides with another object
@@ -66,10 +71,13 @@ public class FireSpell : MonoBehaviour
     public void Throw()
     {
         // Destroying the fireball if it has not existed for longer than the minimum cast time
-        if (timeSinceCreation < minCastTime) 
+        if (timeSinceCreation < 1 / castSpeed)
         {
+            // Destroying and triggering the Un-Cast animation
             Destroy(gameObject, castSpeed);
             animator.SetTrigger("Un-Cast");
+
+            // Returning from the function to prevent setting the state of the fireball
             return;
         }
         
@@ -82,7 +90,7 @@ public class FireSpell : MonoBehaviour
     // Handles the fireball explosion
     public void Explode()
     {
-        Destroy(gameObject);
+        Destroy(gameObject);//, Time.deltaTime * 2);
     }
 
     // Function to curve towards the mouse
@@ -97,8 +105,6 @@ public class FireSpell : MonoBehaviour
 
         // Calculating the distance between the points
         float distanceToMouse = Vector3.Distance(playerPosition, transform.position);
-
-        Debug.Log($"Distance to Mouse: {distanceToMouse}");
 
         // Adding a force to the fireball
         rb.AddForce(towardsMouse * curveTowardsMouseForce * (1 / distanceToMouse));
