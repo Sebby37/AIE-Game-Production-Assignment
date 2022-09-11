@@ -56,7 +56,7 @@ public class FireSpell : MonoBehaviour
         if (timeSinceCreation > lifeTime && state != FireSpellState.Casting) Destroy(gameObject);
 
         // Curving towards the mouse if the fireball is thrown
-        if (state == FireSpellState.Thrown) CurveTowardMouse();
+        if (castByPlayer && state == FireSpellState.Thrown) CurveTowardMouse();
 
         // Enabling / disabling the collider based on whether the fireball is thrown
         fireCollider.enabled = (state == FireSpellState.Thrown);
@@ -68,10 +68,17 @@ public class FireSpell : MonoBehaviour
         Explode();
     }
 
+    // Calls when the gameObject enters a trigger
+    private void OnTriggerEnter2D(Collider2D collision)
+    {
+        // Exploding if the fireball is hit by the player's sword and was not cast by player
+        if (!castByPlayer && collision.CompareTag("Player Damager")) Explode();
+    }
+
     public void Throw()
     {
         // Destroying the fireball if it has not existed for longer than the minimum cast time
-        if (timeSinceCreation < 1 / castSpeed)
+        if (castByPlayer && timeSinceCreation <= 1 / castSpeed)
         {
             // Destroying and triggering the Un-Cast animation
             Destroy(gameObject, castSpeed);
@@ -83,6 +90,7 @@ public class FireSpell : MonoBehaviour
         
         // Adding a force to the fireball to throw it
         state = FireSpellState.Thrown;
+        if (rb == null) rb = GetComponent<Rigidbody2D>();
         rb.AddForce(transform.up * speed, ForceMode2D.Impulse);
         lifeTime += timeSinceCreation;
     }

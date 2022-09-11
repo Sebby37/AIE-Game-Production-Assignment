@@ -403,6 +403,7 @@ GameObject:
   - component: {fileID: 1007333326}
   - component: {fileID: 1007333325}
   - component: {fileID: 1007333327}
+  - component: {fileID: 1007333329}
   - component: {fileID: 1007333328}
   m_Layer: 0
   m_Name: Dummy Test
@@ -490,6 +491,23 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   maxHealth: 5
   postHitInvulnerability: 0.25
+  attackFunction:
+    m_PersistentCalls:
+      m_Calls:
+      - m_Target: {fileID: 1007333329}
+        m_TargetAssemblyTypeName: SimpleFireballAttack, Assembly-CSharp
+        m_MethodName: Attack
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
+  attackInterval: 2
+  attackTimer: 0
 --- !u!61 &1007333328
 BoxCollider2D:
   m_ObjectHideFlags: 0
@@ -516,6 +534,21 @@ BoxCollider2D:
   serializedVersion: 2
   m_Size: {x: 1, y: 0.8828125}
   m_EdgeRadius: 0
+--- !u!114 &1007333329
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1007333324}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 13e8a20f8a75fd24a92d1c70fbe8c127, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  fireballSpeedMultiplier: 0.5
+  activeDistance: 5.5
+  fireBallPrefab: {fileID: 2691658969847831816, guid: 4bc7b013669dbcf44a027f7ec39d061b, type: 3}
 --- !u!1 &1092595669
 GameObject:
   m_ObjectHideFlags: 0
@@ -532,7 +565,7 @@ GameObject:
   - component: {fileID: 1092595675}
   m_Layer: 0
   m_Name: Player
-  m_TagString: Untagged
+  m_TagString: Player
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0

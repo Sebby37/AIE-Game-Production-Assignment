@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.Events;
 
 public class Dummy : MonoBehaviour
 {
@@ -11,6 +12,12 @@ public class Dummy : MonoBehaviour
     float health;
     bool invulnerable = false;
     float invulnerabilityTimer = 0;
+
+    [Header("Attack Patterns")]
+    public UnityEvent attackFunction;
+    public float attackInterval = 2.0f;
+
+    [SerializeField] float attackTimer = 0.0f;
     
     SpriteRenderer spriteRenderer;
 
@@ -30,6 +37,19 @@ public class Dummy : MonoBehaviour
 
         // Setting the color of the sprite to red if it is invulnerable to show that it was hit
         spriteRenderer.color = invulnerable ? Color.red : Color.yellow;
+
+        // Incrementing the attack timer and resetting it if it is greater than the attack interval
+        attackTimer += Time.deltaTime;
+
+        // Invoking the attack function if the timer is greater than the interval
+        if (attackTimer >= attackInterval)
+        {
+            attackTimer = 0.0f;
+            attackFunction.Invoke();
+        }
+        /*if (attackTimer >= attackInterval) attackFunction.Invoke();
+
+        attackTimer = (attackTimer <= attackInterval) ? attackTimer : 0;*/
     }
 
     private void OnTriggerStay2D(Collider2D collision)
@@ -62,7 +82,7 @@ public class Dummy : MonoBehaviour
     }
 
     // Function to take damage
-    void Damage(float amountOfDamage)
+    public void Damage(float amountOfDamage)
     {
         health -= amountOfDamage;
         invulnerable = true;
