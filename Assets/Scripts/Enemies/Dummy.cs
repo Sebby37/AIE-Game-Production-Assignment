@@ -17,7 +17,7 @@ public class Dummy : MonoBehaviour
     public UnityEvent attackFunction;
     public float attackInterval = 2.0f;
 
-    [SerializeField] float attackTimer = 0.0f;
+    float attackTimer = 0.0f;
     
     SpriteRenderer spriteRenderer;
 

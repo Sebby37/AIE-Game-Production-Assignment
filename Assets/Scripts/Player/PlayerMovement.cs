@@ -229,10 +229,8 @@ public class PlayerMovement : MonoBehaviour
                 // Getting the FireSpell component and calling the throw function
                 FireSpell currentFire = currentSpell.GetComponent<FireSpell>();
                 currentFire.playerPosition = transform.position;
-                currentFire.Throw();
-
-                // Setting the FireSpell to be cast by the player
                 currentFire.castByPlayer = true;
+                currentFire.Throw(GetComponent<Collider2D>());
             }
 
             // Clearing the currentSpell variable

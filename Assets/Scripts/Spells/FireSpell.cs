@@ -63,7 +63,7 @@ public class FireSpell : MonoBehaviour
     }
 
     // Calls when gameObject collides with another object
-    void OnCollisionEnter2D()
+    private void OnCollisionEnter2D(Collision2D collision)
     {
         Explode();
     }
@@ -75,7 +75,7 @@ public class FireSpell : MonoBehaviour
         if (!castByPlayer && collision.CompareTag("Player Damager")) Explode();
     }
 
-    public void Throw()
+    public void Throw(Collider2D casterCollider)
     {
         // Destroying the fireball if it has not existed for longer than the minimum cast time
         if (castByPlayer && timeSinceCreation <= 1 / castSpeed)
@@ -91,8 +91,24 @@ public class FireSpell : MonoBehaviour
         // Adding a force to the fireball to throw it
         state = FireSpellState.Thrown;
         if (rb == null) rb = GetComponent<Rigidbody2D>();
-        rb.AddForce(transform.up * speed, ForceMode2D.Impulse);
+
+        // Calculating the angle towards the mouse needed to cast the fireball if the fireball was cast by the player
+        Vector2 towardsMouse = Vector2.zero;
+        if (castByPlayer)
+        {
+            Vector3 mousePosition = Camera.main.ScreenToWorldPoint(Input.mousePosition);
+            towardsMouse = (mousePosition - transform.position).normalized;
+        }
+
+        // Adding a force towards the mouse
+        rb.AddForce((castByPlayer ? towardsMouse : (Vector2) transform.up) * speed, ForceMode2D.Impulse);
+        
+        // Increasing the lifetime of the fireball to prevent despawning if it is held for a long period of time
         lifeTime += timeSinceCreation;
+
+        // Setting the fireball to ignore collisions with the caster
+        // THIS CODE SHOULD BE REWORKED TO ACCOUNT FOR WHEN A COLLIDER IS NULL
+        Physics2D.IgnoreCollision(casterCollider, GetComponent<Collider2D>());
     }
 
     // Handles the fireball explosion

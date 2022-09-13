@@ -34,12 +34,12 @@ public class SimpleFireballAttack : MonoBehaviour
         transform.rotation = Quaternion.Euler(Vector3.forward * (angle - offset));
         
         // Creating a fireball object
-        GameObject fireBall = Instantiate(fireBallPrefab, transform.position + transform.up * 0.5f, transform.rotation);
+        GameObject fireBall = Instantiate(fireBallPrefab, transform.position + transform.up, transform.rotation);
         FireSpell fireComponent = fireBall.GetComponent<FireSpell>();
 
         // Throwing the fireball and setting some variables
         fireComponent.playerPosition = player.transform.position;
         fireComponent.speed *= fireballSpeedMultiplier;
-        fireComponent.Throw();
+        fireComponent.Throw(GetComponent<Collider2D>());
     }
 }
