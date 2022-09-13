@@ -2,6 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
+// Written by Sebastian Cramond
 public class SimpleFireballAttack : MonoBehaviour
 {
     public float fireballSpeedMultiplier = 0.5f;

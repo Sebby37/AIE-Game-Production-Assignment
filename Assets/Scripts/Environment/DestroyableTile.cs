@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Events;
 
+// Written by Sebastian Cramond
 public class DestroyableTile : MonoBehaviour
 {
     [Header("Ways To Be Destroyed")]
@@ -18,19 +19,6 @@ public class DestroyableTile : MonoBehaviour
     public GameObject droppedItem;
     [Range(0, 1)] public float dropProbability = 0.5f;
     public UnityEvent destructionEvent;
-
-
-    // Start is called before the first frame update
-    void Start()
-    {
-        
-    }
-
-    // Update is called once per frame
-    void Update()
-    {
-        
-    }
 
     // OnTriggerStay is currently used only for player sword slash
     private void OnTriggerStay2D(Collider2D collision)

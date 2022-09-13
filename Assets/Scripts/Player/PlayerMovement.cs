@@ -2,6 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
+// Written by Sebastian Cramond
 // Maybe move this to a seperate file
 public enum Directions
 {
