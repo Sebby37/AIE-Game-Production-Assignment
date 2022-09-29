@@ -241,9 +241,4 @@ public class PlayerMovement : MonoBehaviour
             playerState = PlayerMovementStates.Still;
         }
     }
-
-    public void Goog()
-    {
-        Debug.Log("goog");
-    }
 }

@@ -81,9 +81,6 @@ public class Slime : MonoBehaviour
             PursuePlayer();
         else
             IdleMovement();
-
-        // TESTING PURPOSES - Leaping in the direction of the mouse pointer
-        //if (Input.GetMouseButtonDown(0)) Leap(Camera.main.ScreenToWorldPoint(Input.mousePosition));
     }
 
     // Function to trigger a leap
