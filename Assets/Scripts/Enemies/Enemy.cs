@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Events;
 
+// Written by Sebastian Cramond
 /*
   How to 
  [System.Serializable]
