@@ -173,6 +173,9 @@ public class Slime : MonoBehaviour
         // Disabling the collision and behavior components
         enabled = false;
         GetComponent<Collider2D>().enabled = false;
+
+        // Setting the velocity to zero
+        rb.velocity = Vector2.zero;
     }
 
     // Function to move idle
@@ -191,6 +194,7 @@ public class Slime : MonoBehaviour
     // Function to pursue player
     void PursuePlayer()
     {
+        print($"Pursuing player");
         // Returning if the leap is cooling down
         if (leapCooldownTimer >= 0.0f) return;
 

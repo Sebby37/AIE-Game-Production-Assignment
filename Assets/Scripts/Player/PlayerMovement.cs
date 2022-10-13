@@ -46,6 +46,7 @@ public class PlayerMovement : MonoBehaviour
     [Header("Attack Settings")]
     public float damage = 1;
     public float slashSpeed = 6;
+    public Animator swordAnimator;
     public BoxCollider2D damageHitbox;
 
     float slashTime;
@@ -61,11 +62,11 @@ public class PlayerMovement : MonoBehaviour
     void Start()
     {
         rb = GetComponent<Rigidbody2D>();
-        animator = GetComponent<Animator>();
+        swordAnimator = GetComponent<Animator>();
         spriteRenderer = rb.GetComponent<SpriteRenderer>();
 
         slashTime = 1 / slashSpeed;
-        animator.SetFloat("Slash Speed", slashSpeed);
+        swordAnimator.SetFloat("Slash Speed", slashSpeed);
     }
 
     // Update is called once per frame
@@ -82,9 +83,6 @@ public class PlayerMovement : MonoBehaviour
 
         // Running roll code
         UpdateRoll();
-
-        // Updating the player colour
-        UpdatePlayerColour();
     }
 
     // Function to update player movement in 4 directions (Retro Zelda style)
@@ -175,20 +173,6 @@ public class PlayerMovement : MonoBehaviour
         }
     }
 
-    // Function to update the player's colour based on their movement state
-    void UpdatePlayerColour()
-    {
-        switch (playerState)
-        {
-            case PlayerMovementStates.Rolling:
-                spriteRenderer.color = Color.cyan;
-                break;
-            default:
-                spriteRenderer.color = Color.green;
-                break;
-        }
-    }
-
     // TEMPORARY UNTIL PROPER SLASH SCRIPT IS WRITTEN
     // Function to run sword slash code
     void SwordSlash()
@@ -196,7 +180,7 @@ public class PlayerMovement : MonoBehaviour
         if (Input.GetMouseButtonDown(0) && playerState == PlayerMovementStates.Still)
         {
             playerState = PlayerMovementStates.Attacking;
-            animator.SetTrigger("Slash");
+            swordAnimator.SetTrigger("Slash");
         }
         
         // Enabling the damager hitbox based on whether the player is attacking
