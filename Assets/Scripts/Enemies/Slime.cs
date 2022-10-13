@@ -94,7 +94,7 @@ public class Slime : MonoBehaviour
 
         // Calculating the leap direction and velocity
         leapVelocity = pursueLeapDistance / leapTime;
-        leapDirection = (leapPosition - (Vector2)transform.position).normalized;
+        leapDirection = leapPosition;
 
         // Disabling the knockback timer
         knockbackTimer = -1.0f;
