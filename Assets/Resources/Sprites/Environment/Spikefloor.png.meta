@@ -1,37 +1,31 @@
 fileFormatVersion: 2
-guid: 77822ffb350c2cb43a52646e75a62ae2
+guid: ef34f7969de050b46a315cbfd08ced47
 TextureImporter:
   internalIDToNameTable:
   - first:
-      213: -4363427562925154348
-    second: Fire_Test_anim_0
+      213: 5510855900317930027
+    second: Spikefloor_0
   - first:
-      213: 6402540979841622072
-    second: Fire_Test_anim_1
+      213: -6399517331174905001
+    second: Spikefloor_1
   - first:
-      213: -7199536301509787747
-    second: Fire_Test_anim_2
+      213: -7354315040080700785
+    second: Spikefloor_2
   - first:
-      213: -2989795644071714580
-    second: Fire_Test_anim_3
+      213: -4635453943301164270
+    second: Spikefloor_3
   - first:
-      213: 8065255664745782107
-    second: Fire_Test_anim_4
+      213: -7009378747140480478
+    second: Spikefloor_4
   - first:
-      213: -1643914091471626513
-    second: Fire_Test_anim_5
+      213: 1912588093006538935
+    second: Spikefloor_5
   - first:
-      213: 7828390144107751609
-    second: Fire_Test_anim_6
+      213: 7688171422009597034
+    second: Spikefloor_6
   - first:
-      213: 6622741306528087526
-    second: Fire_Test_anim_7
-  - first:
-      213: -3678164162043966833
-    second: Fire_Test_anim_8
-  - first:
-      213: -8497123729108127538
-    second: Fire_Test_anim_9
+      213: 400388175546995569
+    second: Spikefloor_7
   externalObjects: {}
   serializedVersion: 11
   mipmaps:
@@ -76,7 +70,7 @@ TextureImporter:
   spriteMeshType: 1
   alignment: 0
   spritePivot: {x: 0.5, y: 0.5}
-  spritePixelsToUnits: 100
+  spritePixelsToUnits: 32
   spriteBorder: {x: 0, y: 0, z: 0, w: 0}
   spriteGenerateFallbackPhysicsShape: 1
   alphaUsage: 1
@@ -169,70 +163,7 @@ TextureImporter:
     serializedVersion: 2
     sprites:
     - serializedVersion: 2
-      name: Fire_Test_anim_0
-      rect:
-        serializedVersion: 2
-        x: 0
-        y: 96
-        width: 32
-        height: 32
-      alignment: 0
-      pivot: {x: 0, y: 0}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      outline: []
-      physicsShape: []
-      tessellationDetail: 0
-      bones: []
-      spriteID: 4df92bcffbdf173c0800000000000000
-      internalID: -4363427562925154348
-      vertices: []
-      indices: 
-      edges: []
-      weights: []
-    - serializedVersion: 2
-      name: Fire_Test_anim_1
-      rect:
-        serializedVersion: 2
-        x: 32
-        y: 96
-        width: 32
-        height: 32
-      alignment: 0
-      pivot: {x: 0, y: 0}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      outline: []
-      physicsShape: []
-      tessellationDetail: 0
-      bones: []
-      spriteID: 830675b59156ad850800000000000000
-      internalID: 6402540979841622072
-      vertices: []
-      indices: 
-      edges: []
-      weights: []
-    - serializedVersion: 2
-      name: Fire_Test_anim_2
-      rect:
-        serializedVersion: 2
-        x: 64
-        y: 96
-        width: 32
-        height: 32
-      alignment: 0
-      pivot: {x: 0, y: 0}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      outline: []
-      physicsShape: []
-      tessellationDetail: 0
-      bones: []
-      spriteID: d9fbaf8e0eb161c90800000000000000
-      internalID: -7199536301509787747
-      vertices: []
-      indices: 
-      edges: []
-      weights: []
-    - serializedVersion: 2
-      name: Fire_Test_anim_3
+      name: Spikefloor_0
       rect:
         serializedVersion: 2
         x: 0
@@ -240,20 +171,24 @@ TextureImporter:
         width: 32
         height: 32
       alignment: 0
-      pivot: {x: 0, y: 0}
+      pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
-      physicsShape: []
+      physicsShape:
+      - - {x: -16, y: 16}
+        - {x: -16, y: -16}
+        - {x: 16, y: -16}
+        - {x: 16, y: 16}
       tessellationDetail: 0
       bones: []
-      spriteID: ce0681cc3bc1286d0800000000000000
-      internalID: -2989795644071714580
+      spriteID: b22d0da5e3e7a7c40800000000000000
+      internalID: 5510855900317930027
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: Fire_Test_anim_4
+      name: Spikefloor_1
       rect:
         serializedVersion: 2
         x: 32
@@ -261,20 +196,24 @@ TextureImporter:
         width: 32
         height: 32
       alignment: 0
-      pivot: {x: 0, y: 0}
+      pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
-      physicsShape: []
+      physicsShape:
+      - - {x: -16, y: 16}
+        - {x: -16, y: -16}
+        - {x: 16, y: -16}
+        - {x: 16, y: 16}
       tessellationDetail: 0
       bones: []
-      spriteID: b5b11e7ab4b8def60800000000000000
-      internalID: 8065255664745782107
+      spriteID: 75b2d55b4e85037a0800000000000000
+      internalID: -6399517331174905001
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: Fire_Test_anim_5
+      name: Spikefloor_2
       rect:
         serializedVersion: 2
         x: 64
@@ -282,20 +221,24 @@ TextureImporter:
         width: 32
         height: 32
       alignment: 0
-      pivot: {x: 0, y: 0}
+      pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
-      physicsShape: []
+      physicsShape:
+      - - {x: -16, y: 16}
+        - {x: -16, y: -16}
+        - {x: 16, y: -16}
+        - {x: 16, y: 16}
       tessellationDetail: 0
       bones: []
-      spriteID: fee1398f7d4af29e0800000000000000
-      internalID: -1643914091471626513
+      spriteID: f8a5da59f6930f990800000000000000
+      internalID: -7354315040080700785
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: Fire_Test_anim_6
+      name: Spikefloor_3
       rect:
         serializedVersion: 2
         x: 0
@@ -303,20 +246,24 @@ TextureImporter:
         width: 32
         height: 32
       alignment: 0
-      pivot: {x: 0, y: 0}
+      pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
-      physicsShape: []
+      physicsShape:
+      - - {x: -16, y: 16}
+        - {x: -16, y: -16}
+        - {x: 16, y: -16}
+        - {x: 16, y: 16}
       tessellationDetail: 0
       bones: []
-      spriteID: 9b826b60c5704ac60800000000000000
-      internalID: 7828390144107751609
+      spriteID: 213b9d0c23f8bafb0800000000000000
+      internalID: -4635453943301164270
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: Fire_Test_anim_7
+      name: Spikefloor_4
       rect:
         serializedVersion: 2
         x: 32
@@ -324,20 +271,24 @@ TextureImporter:
         width: 32
         height: 32
       alignment: 0
-      pivot: {x: 0, y: 0}
+      pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
-      physicsShape: []
+      physicsShape:
+      - - {x: -16, y: 16}
+        - {x: -16, y: -16}
+        - {x: 16, y: -16}
+        - {x: 16, y: 16}
       tessellationDetail: 0
       bones: []
-      spriteID: 6edb9e62124b8eb50800000000000000
-      internalID: 6622741306528087526
+      spriteID: 222e480ba2fa9be90800000000000000
+      internalID: -7009378747140480478
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: Fire_Test_anim_8
+      name: Spikefloor_5
       rect:
         serializedVersion: 2
         x: 64
@@ -345,20 +296,24 @@ TextureImporter:
         width: 32
         height: 32
       alignment: 0
-      pivot: {x: 0, y: 0}
+      pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
-      physicsShape: []
+      physicsShape:
+      - - {x: -16, y: 16}
+        - {x: -16, y: -16}
+        - {x: 16, y: -16}
+        - {x: 16, y: 16}
       tessellationDetail: 0
       bones: []
-      spriteID: f8a0ccfae2984fcc0800000000000000
-      internalID: -3678164162043966833
+      spriteID: 7b8eb4dbcb0ea8a10800000000000000
+      internalID: 1912588093006538935
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: Fire_Test_anim_9
+      name: Spikefloor_6
       rect:
         serializedVersion: 2
         x: 0
@@ -366,14 +321,43 @@ TextureImporter:
         width: 32
         height: 32
       alignment: 0
-      pivot: {x: 0, y: 0}
+      pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
-      physicsShape: []
+      physicsShape:
+      - - {x: -16, y: 16}
+        - {x: -16, y: -16}
+        - {x: 16, y: -16}
+        - {x: 16, y: 16}
       tessellationDetail: 0
       bones: []
-      spriteID: ec0b7f1fcf6241a80800000000000000
-      internalID: -8497123729108127538
+      spriteID: a6c1135bc2fd1ba60800000000000000
+      internalID: 7688171422009597034
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Spikefloor_7
+      rect:
+        serializedVersion: 2
+        x: 32
+        y: 0
+        width: 32
+        height: 32
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape:
+      - - {x: -16, y: 16}
+        - {x: -16, y: -16}
+        - {x: 16, y: -16}
+        - {x: 16, y: 16}
+      tessellationDetail: 0
+      bones: []
+      spriteID: 173debf9ce67e8500800000000000000
+      internalID: 400388175546995569
       vertices: []
       indices: 
       edges: []

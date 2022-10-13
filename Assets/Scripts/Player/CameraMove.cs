@@ -10,6 +10,10 @@ public class CameraMove : MonoBehaviour
 
     Vector2 moveVelocity;
 
+    private void Start()
+    {
+        transform.position = target.position;
+    }
     // Update is called once per frame
     void FixedUpdate()
     {

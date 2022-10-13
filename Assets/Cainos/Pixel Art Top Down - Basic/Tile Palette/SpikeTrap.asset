@@ -1,0 +1,28 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 13b75c95f34a00d4e8c04f76b73312e6, type: 3}
+  m_Name: SpikeTrap
+  m_EditorClassIdentifier: 
+  m_AnimatedSprites:
+  - {fileID: 5510855900317930027, guid: ef34f7969de050b46a315cbfd08ced47, type: 3}
+  - {fileID: -6399517331174905001, guid: ef34f7969de050b46a315cbfd08ced47, type: 3}
+  - {fileID: -7354315040080700785, guid: ef34f7969de050b46a315cbfd08ced47, type: 3}
+  - {fileID: -4635453943301164270, guid: ef34f7969de050b46a315cbfd08ced47, type: 3}
+  - {fileID: -7009378747140480478, guid: ef34f7969de050b46a315cbfd08ced47, type: 3}
+  - {fileID: 1912588093006538935, guid: ef34f7969de050b46a315cbfd08ced47, type: 3}
+  - {fileID: 7688171422009597034, guid: ef34f7969de050b46a315cbfd08ced47, type: 3}
+  - {fileID: 400388175546995569, guid: ef34f7969de050b46a315cbfd08ced47, type: 3}
+  m_MinSpeed: 12
+  m_MaxSpeed: 12
+  m_AnimationStartTime: 0
+  m_AnimationStartFrame: 0
+  m_TileColliderType: 1

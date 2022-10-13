@@ -6,41 +6,28 @@ using UnityEngine.Events;
 // created by Joseph
 public class FloorHazard : MonoBehaviour
 {
+    // GameObject collider
     Collider2D hazardCollider;
+    // ACtivates when script is started
     private void Start()
     {
         hazardCollider = GetComponent<Collider2D>();
     }
 
-    // Activates when player enters trigger
-    void OnCollisionEnter2D(Collision2D collision)
+    // Activates when player enters and stays within the trigger
+    void OnTriggerStay2D(Collider2D collision)
     {
         // Checks if the gameobject collider is the player
         if (collision.gameObject.tag == "Player")
         {
             // Accesses PlayerMovement component and checks if the current player state is rolling
             PlayerMovement playerMovement = collision.gameObject.GetComponent<PlayerMovement>();
-            if (playerMovement.playerState == PlayerMovementStates.Rolling)
+            if (playerMovement.playerState != PlayerMovementStates.Rolling)
             {
                 // Respawn Player Here
-                // Place holder script to indicate that plyaer has hit spiketrap
-                hazardCollider.isTrigger = true;
+                collision.gameObject.transform.position = Vector2.zero;
+                print("Reset Player");
             }
         }
-    }
-
-    IEnumerator RollColliderReset(float rollTime)
-    {
-        yield return new WaitForSeconds(rollTime);
-        hazardCollider.isTrigger = false;
-    }
-
-    private void OnTriggerEnter2D(Collider2D collision)
-    {
-        hazardCollider.isTrigger = false;
-    }
-    private void Update()
-    {
-        print(hazardCollider.isTrigger);
     }
 }
