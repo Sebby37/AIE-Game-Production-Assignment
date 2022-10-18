@@ -28,8 +28,10 @@ public class PlayerMovement : MonoBehaviour
     public PlayerMovementStates playerState = PlayerMovementStates.Still;
     
     private Rigidbody2D rb;
-    private Animator animator;
-    private SpriteRenderer spriteRenderer;
+
+    [Header("Sprite + Animation Settings")]
+    public SpriteRenderer playerSprite;
+    public Animator playerAnimator;
 
     [Header("Walking Settings")]
     public float movementSpeed = 1.4f; // How fast the player walks in units/second
@@ -63,7 +65,6 @@ public class PlayerMovement : MonoBehaviour
     {
         rb = GetComponent<Rigidbody2D>();
         swordAnimator = GetComponent<Animator>();
-        spriteRenderer = rb.GetComponent<SpriteRenderer>();
 
         slashTime = 1 / slashSpeed;
         swordAnimator.SetFloat("Slash Speed", slashSpeed);
