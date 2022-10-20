@@ -67,7 +67,9 @@ public class PlayerMovement : MonoBehaviour
         swordAnimator = GetComponent<Animator>();
 
         slashTime = 1 / slashSpeed;
-        swordAnimator.SetFloat("Slash Speed", slashSpeed);
+        //swordAnimator.SetFloat("Slash Speed", slashSpeed);
+
+        SetPlayerState(PlayerMovementStates.Still);
     }
 
     // Update is called once per frame
@@ -93,9 +95,9 @@ public class PlayerMovement : MonoBehaviour
         if (playerState == PlayerMovementStates.Still || playerState == PlayerMovementStates.Walking)
         {
             if (Input.GetKey(KeyCode.W) || Input.GetKey(KeyCode.A) || Input.GetKey(KeyCode.S) || Input.GetKey(KeyCode.D))
-                playerState = PlayerMovementStates.Walking;
-            else 
-                playerState = PlayerMovementStates.Still;
+                SetPlayerState(PlayerMovementStates.Walking);
+            else
+                SetPlayerState(PlayerMovementStates.Still);
         }
 
         // Returning if the player is not walking and setting their velocity to zero
@@ -106,10 +108,10 @@ public class PlayerMovement : MonoBehaviour
         }
 
         // Setting the movement direction based on what keys are pressed
-        if (Input.GetKey(KeyCode.W)) movementDirection = Directions.Up;
-        if (Input.GetKey(KeyCode.A)) movementDirection = Directions.Left;
-        if (Input.GetKey(KeyCode.S)) movementDirection = Directions.Down;
-        if (Input.GetKey(KeyCode.D)) movementDirection = Directions.Right;
+        if (Input.GetKey(KeyCode.W)) SetDirection(Directions.Up);
+        else if (Input.GetKey(KeyCode.A)) SetDirection(Directions.Left);
+        else if (Input.GetKey(KeyCode.S)) SetDirection(Directions.Down);
+        else if (Input.GetKey(KeyCode.D)) SetDirection(Directions.Right);
 
         // Calculating the velocity of the player based on their movement direction and adding it to a Vector2
         float xVelocity, yVelocity;
@@ -124,6 +126,7 @@ public class PlayerMovement : MonoBehaviour
         // Setting the rigidbody velocity to the velocity vector
         rb.velocity = velocityVector;
 
+        /*
         // Setting the rotation of the player based on their direction
         float rotation = 0;
         if (movementDirection == Directions.Up) rotation = 0;
@@ -132,6 +135,7 @@ public class PlayerMovement : MonoBehaviour
         if (movementDirection == Directions.Right) rotation = -90;
 
         transform.rotation = Quaternion.Euler(0, 0, rotation);
+        */
     }
 
     // Function to roll
@@ -140,7 +144,7 @@ public class PlayerMovement : MonoBehaviour
         // Setting the player state to rolling if the Q key is pressed
         if (Input.GetKeyDown(KeyCode.Q))
         {
-            if (rollCooldownTimer < 0) playerState = PlayerMovementStates.Rolling;
+            if (rollCooldownTimer < 0) SetPlayerState(PlayerMovementStates.Rolling);
         }
         
         // Updating the roll cooldown timer and resetting it if it counts up to it's maximum
@@ -169,7 +173,7 @@ public class PlayerMovement : MonoBehaviour
         // Stopping the roll if the time has exceeded the roll time
         if (rollTimer > rollTime)
         {
-            playerState = PlayerMovementStates.Still;
+            SetPlayerState(PlayerMovementStates.Still);
             rollCooldownTimer = 0;
         }
     }
@@ -180,8 +184,8 @@ public class PlayerMovement : MonoBehaviour
     {
         if (Input.GetMouseButtonDown(0) && playerState == PlayerMovementStates.Still)
         {
-            playerState = PlayerMovementStates.Attacking;
-            swordAnimator.SetTrigger("Slash");
+            SetPlayerState(PlayerMovementStates.Attacking);
+            //swordAnimator.SetTrigger("Slash");
         }
         
         // Enabling the damager hitbox based on whether the player is attacking
@@ -192,7 +196,9 @@ public class PlayerMovement : MonoBehaviour
         slashTimer = (playerState == PlayerMovementStates.Attacking) ? slashTimer : 0;
 
         // Setting the player state depending on whether the slash timer is greater than the slash time
-        playerState = (playerState == PlayerMovementStates.Attacking && slashTimer >= slashTime) ? PlayerMovementStates.Still : playerState;
+        //playerState = (playerState == PlayerMovementStates.Attacking && slashTimer >= slashTime) ? PlayerMovementStates.Still : playerState;
+        if (playerState == PlayerMovementStates.Attacking && slashTimer >= slashTime)
+            SetPlayerState(PlayerMovementStates.Still);
     }
 
     // Function to cast a fire spell
@@ -202,7 +208,7 @@ public class PlayerMovement : MonoBehaviour
         if (playerState == PlayerMovementStates.Still && Input.GetMouseButtonDown(1))
         {
             // Setting the player movement state to casting and instantiating the fire spell
-            playerState = PlayerMovementStates.Casting;
+            SetPlayerState(PlayerMovementStates.Casting);
             currentSpell = Instantiate(fireSpell, castPoint.position, transform.rotation);
         }
 
@@ -223,7 +229,83 @@ public class PlayerMovement : MonoBehaviour
             currentSpell = null;
 
             // Resetting the player movement state to still
-            playerState = PlayerMovementStates.Still;
+            SetPlayerState(PlayerMovementStates.Still);
         }
+    }
+
+    // Function to convert a direction enum into an animation direction int
+    int DirectionToAnimationInt(Directions direction)
+    {
+        switch (direction)
+        {
+            case Directions.Up:
+                return 0;
+            case Directions.Down:
+                return 1;
+            case Directions.Left:
+                return 2;
+            case Directions.Right:
+                return 3;
+        }
+
+        return 0;
+    }
+    int DirectionToAnimationInt()
+    {
+        return DirectionToAnimationInt(movementDirection);
+    }
+
+    // Function to set the player's direction
+    void SetDirection(Directions direction)
+    {
+        if (movementDirection == direction)
+            return;
+
+        movementDirection = direction;
+        int animatorDirection = DirectionToAnimationInt();
+
+        playerAnimator.SetInteger("Direction", animatorDirection);
+        SetPlayerAnimationState();
+    }
+
+    // Function to set the player's state
+    void SetPlayerState(PlayerMovementStates state)
+    {
+        // Returning if the player's state won't change
+        if (playerState == state)
+            return;
+
+        // Setting the player's state
+        playerState = state;
+
+        // Setting the animation trigger for the state
+        SetPlayerAnimationState();
+    }
+
+    // Function to update the player's animation state
+    void SetPlayerAnimationState(PlayerMovementStates state)
+    {
+        switch (state)
+        {
+            case PlayerMovementStates.Still:
+                playerAnimator.SetTrigger("Idle");
+                break;
+            case PlayerMovementStates.Walking:
+                playerAnimator.SetTrigger("Walk");
+                break;
+            case PlayerMovementStates.Rolling:
+                playerAnimator.SetTrigger("Roll");
+                break;
+            case PlayerMovementStates.Attacking:
+                playerAnimator.SetTrigger("Slash");
+                break;
+            case PlayerMovementStates.Casting:
+                //playerAnimator.SetTrigger("Cast"); /* NOT IMPLEMENTED YET!!! */
+                break;
+        }
+    }
+    void SetPlayerAnimationState()
+    {
+        SetPlayerAnimationState(playerState);
     }
 }
