@@ -725,6 +725,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: Arena Spawner
       objectReference: {fileID: 0}
+    - target: {fileID: 6800741117925527338, guid: 04c42b992d03c524b9d9111d112339ef, type: 3}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 6800741117925527348, guid: 04c42b992d03c524b9d9111d112339ef, type: 3}
       propertyPath: m_RootOrder
       value: 6

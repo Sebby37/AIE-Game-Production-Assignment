@@ -273,7 +273,7 @@ MonoBehaviour:
   rollSpeedMultiplier: 1.75
   rollCooldown: 0.2
   damage: 1
-  slashSpeed: 6
+  slashSpeed: 3
   swordAnimator: {fileID: 1070952287508866838}
   damageHitbox: {fileID: 1070952287518901741}
   castPoint: {fileID: 1070952286035101773}
