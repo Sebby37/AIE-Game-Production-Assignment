@@ -178,7 +178,6 @@ public class PlayerMovement : MonoBehaviour
         }
     }
 
-    // TEMPORARY UNTIL PROPER SLASH SCRIPT IS WRITTEN
     // Function to run sword slash code
     void SwordSlash()
     {
@@ -196,7 +195,6 @@ public class PlayerMovement : MonoBehaviour
         slashTimer = (playerState == PlayerMovementStates.Attacking) ? slashTimer : 0;
 
         // Setting the player state depending on whether the slash timer is greater than the slash time
-        //playerState = (playerState == PlayerMovementStates.Attacking && slashTimer >= slashTime) ? PlayerMovementStates.Still : playerState;
         if (playerState == PlayerMovementStates.Attacking && slashTimer >= slashTime)
             SetPlayerState(PlayerMovementStates.Still);
     }
@@ -300,7 +298,7 @@ public class PlayerMovement : MonoBehaviour
                 playerAnimator.SetTrigger("Slash");
                 break;
             case PlayerMovementStates.Casting:
-                //playerAnimator.SetTrigger("Cast"); /* NOT IMPLEMENTED YET!!! */
+                playerAnimator.SetTrigger("Cast");
                 break;
         }
     }
