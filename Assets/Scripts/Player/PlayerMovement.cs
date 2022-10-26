@@ -48,6 +48,7 @@ public class PlayerMovement : MonoBehaviour
     [Header("Attack Settings")]
     public float damage = 1;
     public float slashSpeed = 6;
+    public Transform swordParent;
     public Animator swordAnimator;
     public BoxCollider2D damageHitbox;
 
@@ -63,12 +64,14 @@ public class PlayerMovement : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
+        // Getting the rigidbody
         rb = GetComponent<Rigidbody2D>();
-        swordAnimator = GetComponent<Animator>();
 
+        // Setting slash parameters
         slashTime = 1 / slashSpeed;
-        //swordAnimator.SetFloat("Slash Speed", slashSpeed);
+        swordAnimator.SetFloat("Speed", slashSpeed);
 
+        // Setting the player state to still
         SetPlayerState(PlayerMovementStates.Still);
     }
 
@@ -126,23 +129,21 @@ public class PlayerMovement : MonoBehaviour
         // Setting the rigidbody velocity to the velocity vector
         rb.velocity = velocityVector;
 
-        /*
-        // Setting the rotation of the player based on their direction
+        // Setting the rotation of the sword based on the direction
         float rotation = 0;
         if (movementDirection == Directions.Up) rotation = 0;
         if (movementDirection == Directions.Down) rotation = 180;
         if (movementDirection == Directions.Left) rotation = 90;
         if (movementDirection == Directions.Right) rotation = -90;
 
-        transform.rotation = Quaternion.Euler(0, 0, rotation);
-        */
+        swordParent.rotation = Quaternion.Euler(0, 0, rotation);
     }
 
     // Function to roll
     void UpdateRoll()
     {
         // Setting the player state to rolling if the Q key is pressed
-        if (Input.GetKeyDown(KeyCode.Q))
+        if (Input.GetKeyDown(KeyCode.Q) && playerState != PlayerMovementStates.Casting)
         {
             if (rollCooldownTimer < 0) SetPlayerState(PlayerMovementStates.Rolling);
         }
@@ -184,7 +185,7 @@ public class PlayerMovement : MonoBehaviour
         if (Input.GetMouseButtonDown(0) && playerState == PlayerMovementStates.Still)
         {
             SetPlayerState(PlayerMovementStates.Attacking);
-            //swordAnimator.SetTrigger("Slash");
+            swordAnimator.SetTrigger("Slash");
         }
         
         // Enabling the damager hitbox based on whether the player is attacking
@@ -198,7 +199,7 @@ public class PlayerMovement : MonoBehaviour
         if (playerState == PlayerMovementStates.Attacking && slashTimer >= slashTime)
             SetPlayerState(PlayerMovementStates.Still);
     }
-
+    
     // Function to cast a fire spell
     void CastFireSpell()
     {
@@ -208,6 +209,17 @@ public class PlayerMovement : MonoBehaviour
             // Setting the player movement state to casting and instantiating the fire spell
             SetPlayerState(PlayerMovementStates.Casting);
             currentSpell = Instantiate(fireSpell, castPoint.position, transform.rotation);
+        }
+
+        // Removing the fireball if the player is no longer casting
+        if (playerState != PlayerMovementStates.Casting && currentSpell != null && Input.GetMouseButton(1))
+        {
+            // Exploding the fireball to get rid of it
+            FireSpell currentFire = currentSpell.GetComponent<FireSpell>();
+            currentFire.Explode();
+
+            // Setting the current spell to null
+            currentSpell = null;
         }
 
         // If the player is casting and the cast button is released, the spell is thrown and the player is set to still
