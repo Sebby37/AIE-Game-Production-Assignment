@@ -128,6 +128,24 @@ public class Slime : MonoBehaviour
         }
     }
 
+    // Code for collision entering (Basically fireball collisions)
+    private void OnCollisionEnter2D(Collision2D collision)
+    {
+        // Checking if the collider is a fireball
+        if (collision.gameObject.CompareTag("Fire Ball"))
+        {
+            // Getting the FireSpell class, returning if there is none
+            FireSpell fireBall = collision.gameObject.GetComponent<FireSpell>();
+            if (fireBall == null) return;
+
+            // Finding the vector that points towards the fireball to apply knockback
+            Vector2 directionToFireBall = (transform.position - fireBall.transform.position).normalized;
+
+            // Triggering the damage function
+            TakeDamage(fireBall.damage, directionToFireBall);
+        }
+    }
+
     // Function for taking damage
     void TakeDamage(float damage, Vector2 knockbackVector)
     {

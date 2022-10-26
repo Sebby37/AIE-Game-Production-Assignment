@@ -2,6 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
+// Written by Sebastian Cramond
 public class ArenaSpawner : MonoBehaviour
 {
     [Header("Enemy Prefabs")]
@@ -19,12 +20,6 @@ public class ArenaSpawner : MonoBehaviour
     {
         // Beginning the coroutine to spawn enemies
         StartCoroutine(SpawnEnemyCoroutine());
-    }
-
-    // Update is called once per frame
-    void Update()
-    {
-        
     }
 
     private void OnDrawGizmos()
