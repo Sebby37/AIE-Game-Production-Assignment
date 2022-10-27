@@ -76,7 +76,7 @@ public class FireSpell : MonoBehaviour
         if (!castByPlayer && collision.CompareTag("Player Damager")) Explode();
     }
 
-    public void Throw(Collider2D casterCollider)
+    public void Throw(Collider2D casterCollider, Vector2? direction = null)
     {
         // Destroying the fireball if it has not existed for longer than the minimum cast time
         if (castByPlayer && timeSinceCreation <= 1 / castSpeed)
@@ -101,8 +101,9 @@ public class FireSpell : MonoBehaviour
             towardsMouse = (mousePosition - transform.position).normalized;
         }
 
-        // Adding a force towards the mouse
-        rb.AddForce((castByPlayer ? towardsMouse : (Vector2) transform.up) * speed, ForceMode2D.Impulse);
+        // Adding a force towards the mouse/position
+        if (direction == null) direction = transform.up;
+        rb.AddForce((castByPlayer ? towardsMouse : (Vector2) direction) * speed, ForceMode2D.Impulse);
         
         // Increasing the lifetime of the fireball to prevent despawning if it is held for a long period of time
         lifeTime += timeSinceCreation;
