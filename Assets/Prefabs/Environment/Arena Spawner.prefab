@@ -16,7 +16,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!4 &6800741117925527348
 Transform:
   m_ObjectHideFlags: 0
@@ -45,6 +45,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   enemies:
   - {fileID: 6599612614025970434, guid: 078c7f2bea19d8f43aeb11b8bff26273, type: 3}
+  - {fileID: 9083425905496187505, guid: c49bdaaaf2151604e8cf98bf138fa373, type: 3}
   spawnBox:
     serializedVersion: 2
     x: -9
