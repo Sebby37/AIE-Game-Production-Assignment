@@ -6,6 +6,7 @@ TagManager:
   tags:
   - Player Damager
   - Fire Ball
+  - Enemy
   layers:
   - Default
   - TransparentFX
