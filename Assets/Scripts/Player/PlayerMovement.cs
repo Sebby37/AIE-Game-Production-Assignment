@@ -203,8 +203,12 @@ public class PlayerMovement : MonoBehaviour
     // Function to cast a fire spell
     void CastFireSpell()
     {
+
+        //This line below was done by Toby Mcdonald to check the current value of the mana, so that the player cannot cast while the current mana is above 10%
+        PlayerHealth playerHealth = GameObject.FindGameObjectWithTag("Player").GetComponent<PlayerHealth>();
+
         // If the player is still and the cast button is pressed, the player state is set to casting and the spell is created
-        if (playerState == PlayerMovementStates.Still && Input.GetMouseButtonDown(1))
+        if (playerState == PlayerMovementStates.Still && Input.GetMouseButtonDown(1) && playerHealth.currentMana > 10)
         {
             // Setting the player movement state to casting and instantiating the fire spell
             SetPlayerState(PlayerMovementStates.Casting);

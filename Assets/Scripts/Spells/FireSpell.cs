@@ -32,12 +32,6 @@ public class FireSpell : MonoBehaviour
     Animator animator;
     Collider2D fireCollider;
 
-
-
-    public float maxMana;
-    private float currentMana;
-    public Image m_manaBar;
-
     // Start is called before the first frame update
     void Start()
     {
@@ -52,25 +46,11 @@ public class FireSpell : MonoBehaviour
         animator.SetFloat("Cast Speed", castSpeed);
         animator.SetFloat("Idle Speed", idleSpeed);
         animator.SetTrigger("Cast");
-
-
-        currentMana = maxMana;
-
     }
 
     // Update is called once per frame
     void Update()
     {
-
-        //This small bit was by Toby McDonald
-        if (currentMana > maxMana)
-        {
-            currentMana = maxMana;
-        }
-
-        m_manaBar.fillAmount += 0.01f;
-
-
         // Adding the time since the previous frame to the time since creation
         timeSinceCreation += Time.deltaTime;
 
