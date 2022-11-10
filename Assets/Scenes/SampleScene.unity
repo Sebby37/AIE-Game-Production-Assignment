@@ -785,7 +785,7 @@ Rigidbody2D:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1742471860}
-  m_BodyType: 0
+  m_BodyType: 1
   m_Simulated: 1
   m_UseFullKinematicContacts: 0
   m_UseAutoMass: 0
@@ -815,6 +815,11 @@ MonoBehaviour:
   animationSpeed: 0.5
   animationSampleRate: 24
   groundPoundFrame: 11
+  slamObject: {fileID: 4808707319209211825, guid: 48df933dbbc0f2a4c92b27dce541ee99, type: 3}
+  slamObjectLifetime: 2
+  slamsPerAttack: 10
+  timeBetweenSlamSpawns: 0.5
+  slamSpawnOffset: {x: 0, y: -1.25, z: 0}
 --- !u!95 &1742471866
 Animator:
   serializedVersion: 3

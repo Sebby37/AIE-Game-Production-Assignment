@@ -23,6 +23,11 @@ public class GolemBoss : MonoBehaviour
 
     [Header("Attack 2 Config")]
     public int groundPoundFrame = 8;
+    public GameObject slamObject;
+    public float slamObjectLifetime = 1.0f;
+    public int slamsPerAttack = 3;
+    public float timeBetweenSlamSpawns = 0.5f;
+    public Vector3 slamSpawnOffset;
 
     Animator animator;
     
@@ -37,6 +42,9 @@ public class GolemBoss : MonoBehaviour
     {
         // Setting the animation speed variable in the animation controller each frame
         animator.SetFloat("Speed", animationSpeed);
+
+        if (Input.GetKeyDown(KeyCode.Alpha2))
+            Attack2();
     }
 
     // Function to begin Attack 2 - Ground Pound
@@ -61,10 +69,25 @@ public class GolemBoss : MonoBehaviour
     {
         // Waiting until the ground pound is to happen
         float timeToWait = ((float) groundPoundFrame / (float) animationSampleRate) * (1 / animationSpeed);
-        print(timeToWait);
         yield return new WaitForSeconds(timeToWait);
 
-        print("Ground pound!!!");
+        // Getting the player's GameObject to spawn slam attacks on them
+        GameObject player = GameObject.FindGameObjectWithTag("Player");
+
+        // Spawning slam objects
+        for (int i = 0; i < slamsPerAttack; i++)
+        {
+            // Instantiating the object at the player's position
+            GameObject currentSlam = Instantiate(slamObject, player.transform.position + slamSpawnOffset, Quaternion.identity);
+
+            // Setting the slam object to be destroyed after an interval
+            Destroy(currentSlam, slamObjectLifetime);
+
+            // Waiting to spawn the next slam object
+            if (i < slamsPerAttack - 1)
+                yield return new WaitForSeconds(timeBetweenSlamSpawns);
+        }
+        
         // Setting the attack state to idle as the attack is complete
         state = GolemStates.Idle;
     }

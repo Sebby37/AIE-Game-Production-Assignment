@@ -142,8 +142,8 @@ public class PlayerMovement : MonoBehaviour
     // Function to roll
     void UpdateRoll()
     {
-        // Setting the player state to rolling if the Q key is pressed
-        if (Input.GetKeyDown(KeyCode.Q) && playerState != PlayerMovementStates.Casting)
+        // Setting the player state to rolling if the Q/Shift key is pressed
+        if ((Input.GetKeyDown(KeyCode.Q) || Input.GetKeyDown(KeyCode.LeftShift)) && playerState != PlayerMovementStates.Casting)
         {
             if (rollCooldownTimer < 0) SetPlayerState(PlayerMovementStates.Rolling);
         }
@@ -208,7 +208,7 @@ public class PlayerMovement : MonoBehaviour
         PlayerHealth playerHealth = GameObject.FindGameObjectWithTag("Player").GetComponent<PlayerHealth>();
 
         // If the player is still and the cast button is pressed, the player state is set to casting and the spell is created
-        if (playerState == PlayerMovementStates.Still && Input.GetMouseButtonDown(1) && playerHealth.currentMana > 10)
+        if (playerState == PlayerMovementStates.Still && Input.GetMouseButtonDown(1)/* && (playerHealth != null && playerHealth.currentMana > 10)*/)
         {
             // Setting the player movement state to casting and instantiating the fire spell
             SetPlayerState(PlayerMovementStates.Casting);
@@ -321,5 +321,21 @@ public class PlayerMovement : MonoBehaviour
     void SetPlayerAnimationState()
     {
         SetPlayerAnimationState(playerState);
+    }
+
+    // Function to die
+    [ContextMenu("Die")]
+    public void Die()
+    {
+        // Triggering the death animation
+        if (playerAnimator != null)
+            playerAnimator.SetTrigger("Die");
+
+        // Disabling the movement script so the player has no control as they are dead (duh)
+        enabled = false;
+        
+        // Disabling the collider so enemies don't knock the player's deceased carcass around
+        Collider2D collider = GetComponent<Collider2D>();
+        collider.enabled = false;
     }
 }
