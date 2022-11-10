@@ -678,6 +678,7 @@ GameObject:
   - component: {fileID: 1742471861}
   - component: {fileID: 1742471863}
   - component: {fileID: 1742471864}
+  - component: {fileID: 1742471866}
   m_Layer: 0
   m_Name: Golem Boss
   m_TagString: Untagged
@@ -809,8 +810,30 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d01e29c6321780e489365dfe3c0840d4, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  state: 0
+  state: 1
   inBossBattle: 0
+  animationSpeed: 0.5
+  animationSampleRate: 24
+  groundPoundFrame: 11
+--- !u!95 &1742471866
+Animator:
+  serializedVersion: 3
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1742471860}
+  m_Enabled: 1
+  m_Avatar: {fileID: 0}
+  m_Controller: {fileID: 9100000, guid: 54aa66ecde2cc4a47b595cf660001e79, type: 2}
+  m_CullingMode: 0
+  m_UpdateMode: 0
+  m_ApplyRootMotion: 0
+  m_LinearVelocityBlending: 0
+  m_WarningMessage: 
+  m_HasTransformHierarchy: 1
+  m_AllowConstantClipSamplingOptimization: 1
+  m_KeepAnimatorControllerStateOnDisable: 0
 --- !u!1 &1849466429
 GameObject:
   m_ObjectHideFlags: 0
