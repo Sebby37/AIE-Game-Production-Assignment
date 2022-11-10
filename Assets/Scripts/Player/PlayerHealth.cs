@@ -29,13 +29,23 @@ public class PlayerHealth : MonoBehaviour
 
     private float moneyCount;
 
+    private bool isDead;
+    public float fadeSpeed;
+
+    public GameObject specialText;
+
+    private CanvasGroup deathUI;
+
+
     // Start is called before the first frame update
     void Start()
-    {
+    {        
 
         currentHealth = maxHealth;
         currentPotion = maxPotion;
         currentMana = maxMana;
+        specialText.SetActive(false);
+        isDead = false;
 
     }
 
@@ -46,12 +56,12 @@ public class PlayerHealth : MonoBehaviour
         UpdateHealthUI();
         HealPlayer();
 
-        /*if (Input.GetKeyDown(KeyCode.L))
+        if (Input.GetKeyDown(KeyCode.L))
         {
 
             currentHealth -= 10;
 
-        }*/
+        }
 
         currentMana += 1.0f * Time.deltaTime;
         UpdateManaUI();
@@ -98,6 +108,7 @@ public class PlayerHealth : MonoBehaviour
 
         if (currentHealth <= 0)
         {
+            isDead = true;
             Death();
         }
 
@@ -145,13 +156,21 @@ public class PlayerHealth : MonoBehaviour
     private void OnTriggerEnter2D(Collider2D collision)
     {
 
+        HealthCrystal healthCrystal = collision.gameObject.GetComponent<HealthCrystal>();
+
+        if (healthCrystal != null)
+        {
+
+            Debug.Log("May god Eat you");
+            currentPotion += 5;
+            m_potionFill.fillAmount = currentPotion / maxPotion;
+            Destroy(healthCrystal.gameObject);
 
 
+        }
 
-        /* DO LATER IF THERE IS TIME (THERE WILL NOT BE) 8/11/2022 - If you are marking this I am sorry ~UwU~
-         * 
-         * 
-         * Coin coin = collision.gameObject.GetComponent<Coin>();
+
+        Coin coin = collision.gameObject.GetComponent<Coin>();
 
         if (coin != null)
         {
@@ -162,7 +181,7 @@ public class PlayerHealth : MonoBehaviour
 
                 currencyText.text = "$" + moneyCount;
 
-                Destroy(gameObject);
+                Destroy(coin.gameObject);
 
             }
 
@@ -173,7 +192,7 @@ public class PlayerHealth : MonoBehaviour
 
                 currencyText.text = "$" + moneyCount;
 
-                Destroy(gameObject);
+                Destroy(coin.gameObject);
 
             }
 
@@ -184,10 +203,10 @@ public class PlayerHealth : MonoBehaviour
 
                 currencyText.text = "$" + moneyCount;
 
-                Destroy(gameObject);
+                Destroy(coin.gameObject);
 
             }
-        }*/
+        }
 
     }
 
@@ -216,16 +235,33 @@ public class PlayerHealth : MonoBehaviour
             }
 
         }
+
     }
 
     void Death()
-    {
+    {       
 
-        PlayerMovement playerMovement = GameObject.FindGameObjectWithTag("Player").GetComponent<PlayerMovement>();
+        if (isDead == true)
+        {
 
-        playerMovement.playerAnimator.SetTrigger("Die");
+            deathUI = specialText.GetComponent<CanvasGroup>();
 
-        
+            Debug.Log("Dying");
+
+            specialText.SetActive(true);
+
+            if (deathUI.alpha < 1)
+            {
+                deathUI.alpha += 1 * fadeSpeed * Time.deltaTime;
+            }            
+
+            /*Color objectColour = deathText.GetComponent<CanvasRenderer>();
+            float fadeAmount = objectColour.a + (fadeSpeed * Time.deltaTime);
+
+            objectColour = new Color(objectColour.r, objectColour.g, objectColour.b, fadeAmount);
+            deathText.GetComponent<CanvasRenderer>().material.color = objectColour;*/
+
+        }
 
     }
 
