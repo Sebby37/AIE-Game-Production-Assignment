@@ -250,9 +250,11 @@ public class PlayerHealth : MonoBehaviour
 
             specialText.SetActive(true);
 
+            gameObject.GetComponent<PlayerMovement>().Die();
+
             if (deathUI.alpha < 1)
             {
-                deathUI.alpha += 1 * fadeSpeed * Time.deltaTime;
+                deathUI.alpha += 0.5f * fadeSpeed * Time.deltaTime;
             }            
 
             /*Color objectColour = deathText.GetComponent<CanvasRenderer>();
