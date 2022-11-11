@@ -817,9 +817,12 @@ MonoBehaviour:
   groundPoundFrame: 11
   slamObject: {fileID: 4808707319209211825, guid: 48df933dbbc0f2a4c92b27dce541ee99, type: 3}
   slamObjectLifetime: 2
-  slamsPerAttack: 10
-  timeBetweenSlamSpawns: 0.5
+  slamsPerAttack: 20
+  timeBetweenSlamSpawns: 0.25
   slamSpawnOffset: {x: 0, y: -1.25, z: 0}
+  dashBeginFrame: 6
+  dashEndFrame: 13
+  dashSpeed: 8
 --- !u!95 &1742471866
 Animator:
   serializedVersion: 3
