@@ -21,6 +21,9 @@ public class GolemBoss : MonoBehaviour
     public float animationSpeed = 1.0f;
     public int animationSampleRate = 24;
 
+    [Header("Boss AI Behaviour")]
+    public float timeBetweenAttacks = 5.0f;
+
     [Header("Attack 1 Config")]
     public GameObject fireBall;
     public int castFireBallFrame = 0;
@@ -89,15 +92,46 @@ public class GolemBoss : MonoBehaviour
         // Setting the state
         state = GolemStates.Attacking;
 
-        // Triggering the animation
-        animator.SetTrigger("Attack 1");
-
         // Starting the coroutine
         StartCoroutine(Attack1Coroutine());
     }
 
+    // Function to begin Attack 2 - Ground Pound
+    [ContextMenu("Attack 2")]
+    void Attack2()
+    {
+        // Returning if the current state is not idle
+        if (state != GolemStates.Idle)
+            return;
+
+        // Setting the state
+        state = GolemStates.Attacking;
+
+        // Beginning the attack coroutine
+        StartCoroutine(Attack2Coroutine());
+    }
+
+    // Function to begin Attack 3
+    [ContextMenu("Attack 3")]
+    void Attack3()
+    {
+        // Returning if the current state is not idle
+        if (state != GolemStates.Idle)
+            return;
+
+        // Setting the state
+        state = GolemStates.Attacking;
+
+        // Beginning the attack coroutine
+        StartCoroutine(Attack3Coroutine());
+    }
+
+    // The Attack 1 Coroutine
     IEnumerator Attack1Coroutine()
     {
+        // Triggering the animation
+        animator.SetTrigger("Attack 1");
+
         // Waiting until the fireball needs to be cast
         float timeToWait = ((float)castFireBallFrame / (float)animationSampleRate) * (1 / animationSpeed);
         yield return new WaitForSeconds(timeToWait);
@@ -120,26 +154,12 @@ public class GolemBoss : MonoBehaviour
         state = GolemStates.Idle;
     }
 
-    // Function to begin Attack 2 - Ground Pound
-    [ContextMenu("Attack 2")]
-    void Attack2()
+    // The Attack 2 Coroutine
+    IEnumerator Attack2Coroutine()
     {
-        // Returning if the current state is not idle
-        if (state != GolemStates.Idle)
-            return;
-        
-        // Setting the state
-        state = GolemStates.Attacking;
-
         // Triggering the animation
         animator.SetTrigger("Attack 2");
 
-        // Beginning the attack coroutine
-        StartCoroutine(Attack2Coroutine());
-    }
-
-    IEnumerator Attack2Coroutine()
-    {
         // Waiting until the ground pound is to happen
         float timeToWait = ((float) groundPoundFrame / (float) animationSampleRate) * (1 / animationSpeed);
         yield return new WaitForSeconds(timeToWait);
@@ -165,26 +185,12 @@ public class GolemBoss : MonoBehaviour
         state = GolemStates.Idle;
     }
 
-    // Function to begin Attack 3
-    [ContextMenu("Attack 3")]
-    void Attack3()
+    // The Attack 3 Coroutine
+    IEnumerator Attack3Coroutine()
     {
-        // Returning if the current state is not idle
-        if (state != GolemStates.Idle)
-            return;
-
-        // Setting the state
-        state = GolemStates.Attacking;
-
         // Triggering the animation
         animator.SetTrigger("Attack 3");
 
-        // Beginning the attack coroutine
-        StartCoroutine(Attack3Coroutine());
-    }
-
-    IEnumerator Attack3Coroutine()
-    {
         // Waiting until the beginning of the attack behaviour
         float timeToWait = ((float)dashBeginFrame / (float)animationSampleRate) * (1 / animationSpeed);
         yield return new WaitForSeconds(timeToWait);
