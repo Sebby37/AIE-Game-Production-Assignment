@@ -21,13 +21,20 @@ public class GolemBoss : MonoBehaviour
     public float animationSpeed = 1.0f;
     public int animationSampleRate = 24;
 
+    [Header("Attack 1 Config")]
+    public GameObject fireBall;
+    public int castFireBallFrame = 0;
+    public Vector2 fireBallCastOffset;
+    public int throwFireBallFrame = 15;
+    public float fireBallSpeed = 3.5f;
+
     [Header("Attack 2 Config")]
     public int groundPoundFrame = 8;
     public GameObject slamObject;
     public float slamObjectLifetime = 1.0f;
     public int slamsPerAttack = 3;
     public float timeBetweenSlamSpawns = 0.5f;
-    public Vector3 slamSpawnOffset;
+    public Vector2 slamSpawnOffset;
 
     [Header("Attack 3 Config")]
     public int dashBeginFrame = 6;
@@ -84,6 +91,33 @@ public class GolemBoss : MonoBehaviour
 
         // Triggering the animation
         animator.SetTrigger("Attack 1");
+
+        // Starting the coroutine
+        StartCoroutine(Attack1Coroutine());
+    }
+
+    IEnumerator Attack1Coroutine()
+    {
+        // Waiting until the fireball needs to be cast
+        float timeToWait = ((float)castFireBallFrame / (float)animationSampleRate) * (1 / animationSpeed);
+        yield return new WaitForSeconds(timeToWait);
+
+        // Instantiating the fireball
+        GameObject newFireBall = Instantiate(fireBall, (Vector2) transform.position + fireBallCastOffset, Quaternion.identity);
+
+        // Waiting until the fireball is to be thrown
+        timeToWait = ((float)(throwFireBallFrame - castFireBallFrame) / (float)animationSampleRate) * (1 / animationSpeed);
+        yield return new WaitForSeconds(timeToWait);
+
+        // Making sure the fireball ignores collision with the boss
+        Physics2D.IgnoreCollision(newFireBall.GetComponent<Collider2D>(), GetComponent<Collider2D>());
+        
+        // Throwing the fireball
+        BossFireBall fireBallComponent = newFireBall.GetComponent<BossFireBall>();
+        fireBallComponent.Throw(fireBallSpeed, gameObject);
+
+        // Setting the attack state to idle as the attack is complete
+        state = GolemStates.Idle;
     }
 
     // Function to begin Attack 2 - Ground Pound
@@ -117,7 +151,7 @@ public class GolemBoss : MonoBehaviour
         for (int i = 0; i < slamsPerAttack; i++)
         {
             // Instantiating the object at the player's position
-            GameObject currentSlam = Instantiate(slamObject, player.transform.position + slamSpawnOffset, Quaternion.identity);
+            GameObject currentSlam = Instantiate(slamObject, (Vector2) player.transform.position + slamSpawnOffset, Quaternion.identity);
 
             // Setting the slam object to be destroyed after an interval
             Destroy(currentSlam, slamObjectLifetime);
@@ -157,7 +191,7 @@ public class GolemBoss : MonoBehaviour
 
         // Finding the direction to the player
         GameObject player = GameObject.FindGameObjectWithTag("Player");
-        Vector2 directionToPlayer = ((player.transform.position + slamSpawnOffset) - transform.position).normalized;
+        Vector2 directionToPlayer = (((Vector2) player.transform.position + slamSpawnOffset) - (Vector2) transform.position).normalized;
 
         // Setting the golem's velocity
         rb.velocity = directionToPlayer * dashSpeed;
