@@ -208,13 +208,13 @@ public class GolemBoss : MonoBehaviour
             // Triggering the animation
             animator.SetTrigger("Attack 3");
 
-            // Waiting until the beginning of the attack behaviour
-            float timeToWait = ((float)dashBeginFrame / (float)animationSampleRate) * (1 / animationSpeed);
-            yield return new WaitForSeconds(timeToWait);
-
             // Finding the direction to the player
             GameObject player = GameObject.FindGameObjectWithTag("Player");
             Vector2 directionToPlayer = (((Vector2)player.transform.position + slamSpawnOffset) - (Vector2)transform.position).normalized;
+
+            // Waiting until the beginning of the attack behaviour
+            float timeToWait = ((float)dashBeginFrame / (float)animationSampleRate) * (1 / animationSpeed);
+            yield return new WaitForSeconds(timeToWait);
 
             // Setting the golem's velocity
             rb.velocity = directionToPlayer * dashSpeed;
