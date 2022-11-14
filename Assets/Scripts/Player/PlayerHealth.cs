@@ -213,6 +213,7 @@ public class PlayerHealth : MonoBehaviour
     private void OnCollisionEnter2D(Collision2D collision)
     {
 
+        //Take Damage from Slime
         if (collision.gameObject.CompareTag("Enemy") && collision.gameObject.name.Contains("Slime"))
         {
 
@@ -221,8 +222,25 @@ public class PlayerHealth : MonoBehaviour
 
         }
 
+        //Take Damage from Boss
+        if (collision.gameObject.CompareTag("Enemy") && collision.gameObject.name.Contains("Boss"))
+        {
 
+            currentHealth -= 20;
+            UpdateHealthUI();
 
+        }
+
+        //Take Damage from ground thing
+        if (collision.gameObject.CompareTag("Damages Player"))
+        {
+
+            currentHealth -= 5;
+            UpdateHealthUI();
+
+        }
+
+        //Take Damage from Fireball
         if (collision.gameObject.CompareTag("Fire Ball"))
         {
 
@@ -230,7 +248,7 @@ public class PlayerHealth : MonoBehaviour
 
             if (fireSpell != null && !fireSpell.castByPlayer)
             {
-                currentHealth -= 5;
+                currentHealth -= 15;
                 UpdateHealthUI();
             }
 
