@@ -43,6 +43,8 @@ public class GolemBoss : MonoBehaviour
     public int dashBeginFrame = 6;
     public int dashEndFrame = 10;
     public float dashSpeed = 5.0f;
+    public int dashTimes = 3;
+    public float timeBetweenDashes = 0.5f;
 
     Animator animator;
     Rigidbody2D rb;
@@ -52,6 +54,8 @@ public class GolemBoss : MonoBehaviour
     {
         animator = GetComponent<Animator>();
         rb = GetComponent<Rigidbody2D>();
+
+        StartCoroutine(AttackTimingCoroutine());
     }
 
     // Update is called once per frame
@@ -60,14 +64,18 @@ public class GolemBoss : MonoBehaviour
         // Setting the animation speed variable in the animation controller each frame
         animator.SetFloat("Speed", animationSpeed);
 
-        if (Input.GetKeyDown(KeyCode.Alpha1))
-            Attack1();
+        // Debug keys to trigger attacks
+        if (true)
+        {
+            if (Input.GetKeyDown(KeyCode.Alpha1))
+                Attack(1);
 
-        if (Input.GetKeyDown(KeyCode.Alpha2))
-            Attack2();
+            if (Input.GetKeyDown(KeyCode.Alpha2))
+                Attack(2);
 
-        if (Input.GetKeyDown(KeyCode.Alpha3))
-            Attack3();
+            if (Input.GetKeyDown(KeyCode.Alpha3))
+                Attack(3);
+        }
     }
 
     // Function to begin Attack 1
@@ -81,9 +89,8 @@ public class GolemBoss : MonoBehaviour
         animator.SetTrigger("Intro");
     }
 
-    // Function to begin Attack 1
-    [ContextMenu("Attack 1")]
-    void Attack1()
+    // Function to attack
+    void Attack(int attackNumber)
     {
         // Returning if the current state is not idle
         if (state != GolemStates.Idle)
@@ -92,38 +99,46 @@ public class GolemBoss : MonoBehaviour
         // Setting the state
         state = GolemStates.Attacking;
 
-        // Starting the coroutine
-        StartCoroutine(Attack1Coroutine());
+        // Attacking based on the attack's number
+        switch (attackNumber)
+        {
+            case 1:
+                StartCoroutine(Attack1Coroutine());
+                break;
+            case 2:
+                StartCoroutine(Attack2Coroutine());
+                break;
+            case 3:
+                StartCoroutine(Attack3Coroutine());
+                break;
+            default:
+                state = GolemStates.Idle;
+                break;
+        }
     }
 
-    // Function to begin Attack 2 - Ground Pound
-    [ContextMenu("Attack 2")]
-    void Attack2()
+    // The attack timing coroutine
+    IEnumerator AttackTimingCoroutine()
     {
-        // Returning if the current state is not idle
-        if (state != GolemStates.Idle)
-            return;
+        while (true)
+        {
+            // Getting a random attack to perform
+            int chosenAttack = Random.Range(1, 4);
 
-        // Setting the state
-        state = GolemStates.Attacking;
+            // Performing the chosen attack
+            Attack(chosenAttack);
 
-        // Beginning the attack coroutine
-        StartCoroutine(Attack2Coroutine());
-    }
+            // Waiting for the golem boss to be idle before beginning another attack
+            while (state != GolemStates.Idle)
+            {
+                // Golem is attacking
+                print(state.ToString());
+                yield return null;
+            }
 
-    // Function to begin Attack 3
-    [ContextMenu("Attack 3")]
-    void Attack3()
-    {
-        // Returning if the current state is not idle
-        if (state != GolemStates.Idle)
-            return;
-
-        // Setting the state
-        state = GolemStates.Attacking;
-
-        // Beginning the attack coroutine
-        StartCoroutine(Attack3Coroutine());
+            // Waiting to start the next attack
+            yield return new WaitForSeconds(timeBetweenAttacks);
+        }
     }
 
     // The Attack 1 Coroutine
@@ -188,28 +203,35 @@ public class GolemBoss : MonoBehaviour
     // The Attack 3 Coroutine
     IEnumerator Attack3Coroutine()
     {
-        // Triggering the animation
-        animator.SetTrigger("Attack 3");
+        for (int i = 0; i < dashTimes; i++)
+        {
+            // Triggering the animation
+            animator.SetTrigger("Attack 3");
 
-        // Waiting until the beginning of the attack behaviour
-        float timeToWait = ((float)dashBeginFrame / (float)animationSampleRate) * (1 / animationSpeed);
-        yield return new WaitForSeconds(timeToWait);
+            // Waiting until the beginning of the attack behaviour
+            float timeToWait = ((float)dashBeginFrame / (float)animationSampleRate) * (1 / animationSpeed);
+            yield return new WaitForSeconds(timeToWait);
 
-        // Finding the direction to the player
-        GameObject player = GameObject.FindGameObjectWithTag("Player");
-        Vector2 directionToPlayer = (((Vector2) player.transform.position + slamSpawnOffset) - (Vector2) transform.position).normalized;
+            // Finding the direction to the player
+            GameObject player = GameObject.FindGameObjectWithTag("Player");
+            Vector2 directionToPlayer = (((Vector2)player.transform.position + slamSpawnOffset) - (Vector2)transform.position).normalized;
 
-        // Setting the golem's velocity
-        rb.velocity = directionToPlayer * dashSpeed;
+            // Setting the golem's velocity
+            rb.velocity = directionToPlayer * dashSpeed;
 
-        // Waiting until the end of the dash behaviour
-        timeToWait = ((float)(dashEndFrame - dashBeginFrame) / (float)animationSampleRate) * (1 / animationSpeed);
-        yield return new WaitForSeconds(timeToWait);
+            // Waiting until the end of the dash behaviour
+            timeToWait = ((float)(dashEndFrame - dashBeginFrame) / (float)animationSampleRate) * (1 / animationSpeed);
+            yield return new WaitForSeconds(timeToWait);
 
-        // Resetting the velocity to zero as the dash is complete
-        rb.velocity = Vector2.zero;
+            // Resetting the velocity to zero as the dash is complete
+            rb.velocity = Vector2.zero;
 
-        // Setting the attack state to idle as the attack is complete
-        state = GolemStates.Idle;
+            // Setting the attack state to idle as the attack is complete
+            state = GolemStates.Idle;
+
+            // Delaying for the next dash
+            if (i < dashTimes - 1)
+                yield return new WaitForSeconds(timeBetweenDashes);
+        }
     }
 }
