@@ -674,6 +674,7 @@ MonoBehaviour:
   inBossBattle: 0
   animationSpeed: 0.5
   animationSampleRate: 24
+  timeBetweenAttacks: 5
   fireBall: {fileID: 4343338091053787164, guid: aa330ac644c2a5e4d891f3b929a432d2, type: 3}
   castFireBallFrame: 0
   fireBallCastOffset: {x: 0, y: 2.5}
@@ -688,6 +689,8 @@ MonoBehaviour:
   dashBeginFrame: 6
   dashEndFrame: 13
   dashSpeed: 8
+  dashTimes: 3
+  timeBetweenDashes: 0
 --- !u!95 &1742471866
 Animator:
   serializedVersion: 3
