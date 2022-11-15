@@ -20,6 +20,7 @@ EditorBuildSettings:
   - enabled: 1
     path: Assets/Scenes/FireDungeon.unity
     guid: f93fadb2d436d974c90e2f17f9ff1ad7
+  - enabled: 1
     path: Assets/Scenes/CombatTest.unity
     guid: 848404cf87500f94cbdd8a1690c2f423
   m_configObjects: {}

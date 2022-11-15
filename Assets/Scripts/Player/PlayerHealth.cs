@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 using UnityEngine.Sprites;
+using UnityEngine.SceneManagement;
 
 public class PlayerHealth : MonoBehaviour
 {
@@ -36,6 +37,7 @@ public class PlayerHealth : MonoBehaviour
 
     private CanvasGroup deathUI;
 
+    private string lastScene;
 
     // Start is called before the first frame update
     void Start()
@@ -53,6 +55,13 @@ public class PlayerHealth : MonoBehaviour
     void Update()
     {
 
+        if (Input.GetKeyDown(KeyCode.Escape))
+        {
+            Debug.Log("EDXITUS");
+            SceneManager.LoadScene("MenuScreen");
+
+        }
+
         UpdateHealthUI();
         HealPlayer();
 
@@ -65,15 +74,6 @@ public class PlayerHealth : MonoBehaviour
 
         currentMana += 1.0f * Time.deltaTime;
         UpdateManaUI();
-
-        /*if (Input.GetKeyDown(KeyCode.M))
-        {
-
-            currentMana -= 20;
-            print(currentMana);
-            UpdateManaUI();
-
-        }*/
 
         if (m_healthBar.fillAmount < 0.25)
         {
@@ -112,6 +112,21 @@ public class PlayerHealth : MonoBehaviour
             Death();
         }
 
+        if (deathUI.alpha >= 1 && Input.anyKeyDown)
+        {
+
+            lastScene = LevelChanger.lastSceneName;
+            if (lastScene == null)
+            {
+
+                lastScene = "MenuScreen";
+
+            }
+            SceneManager.LoadScene(lastScene);
+
+
+        }
+        
     }
 
 
@@ -272,7 +287,8 @@ public class PlayerHealth : MonoBehaviour
 
             if (deathUI.alpha < 1)
             {
-                deathUI.alpha += 0.5f * fadeSpeed * Time.deltaTime;
+                deathUI.alpha += 0.5f * fadeSpeed * Time.deltaTime;               
+
             }            
 
             /*Color objectColour = deathText.GetComponent<CanvasRenderer>();
@@ -280,6 +296,8 @@ public class PlayerHealth : MonoBehaviour
 
             objectColour = new Color(objectColour.r, objectColour.g, objectColour.b, fadeAmount);
             deathText.GetComponent<CanvasRenderer>().material.color = objectColour;*/
+
+            
 
         }
 

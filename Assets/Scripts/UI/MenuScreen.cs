@@ -7,6 +7,8 @@ using UnityEngine.SceneManagement;
 public class MenuScreen : MonoBehaviour
 {
 
+    //This script was written by Toby McDonald
+
     public Button startButton;
     public Button optionsButton;
     public Button exitButton;
@@ -24,6 +26,13 @@ public class MenuScreen : MonoBehaviour
     }
 
     public void beginGame()
+    {
+
+        SceneManager.LoadScene("Tutorial");
+
+    }
+
+    public void arenaGame()
     {
 
         SceneManager.LoadScene("CombatTest");
