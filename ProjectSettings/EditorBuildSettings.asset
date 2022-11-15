@@ -15,6 +15,11 @@ EditorBuildSettings:
     path: Assets/Scenes/TestScene.unity
     guid: dc3af9117e7302f45b58e91787c92e79
   - enabled: 1
+    path: Assets/Scenes/Overworld.unity
+    guid: d9c56f71f7ec5b548ae728a6e3605820
+  - enabled: 1
+    path: Assets/Scenes/FireDungeon.unity
+    guid: f93fadb2d436d974c90e2f17f9ff1ad7
     path: Assets/Scenes/CombatTest.unity
     guid: 848404cf87500f94cbdd8a1690c2f423
   m_configObjects: {}

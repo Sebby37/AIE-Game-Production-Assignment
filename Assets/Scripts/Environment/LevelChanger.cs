@@ -8,12 +8,15 @@ public class LevelChanger : MonoBehaviour
 {
     
     [Header("Level Trigger Scene Name")]
-    public string SceneName = null; // String to hold the next scene name
+    public string sceneName = null; // String to hold the next scene name
+
+    [Header("Name of the last scene")]
+    public static string lastSceneName;  // String to hold the last loaded scene
 
     // Runs on start to check if there is a scene name loaded into the string
     private void Start()
     {
-        if (SceneName == null)
+        if (sceneName == null)
         {
             print("Next scene is unavailable");
         }
@@ -24,7 +27,8 @@ public class LevelChanger : MonoBehaviour
     {
         if (other.tag == "Player")
         {
-           SceneManager.LoadScene(SceneName);
+           lastSceneName = SceneManager.GetActiveScene().name;
+           SceneManager.LoadScene(sceneName);
         }
     }
 }
