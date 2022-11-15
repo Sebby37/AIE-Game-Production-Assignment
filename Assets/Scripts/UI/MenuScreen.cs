@@ -6,6 +6,11 @@ using UnityEngine.SceneManagement;
 
 public class MenuScreen : MonoBehaviour
 {
+
+    public Button startButton;
+    public Button optionsButton;
+    public Button exitButton;
+
     // Start is called before the first frame update
     void Start()
     {
@@ -17,4 +22,19 @@ public class MenuScreen : MonoBehaviour
     {
         
     }
+
+    public void beginGame()
+    {
+
+        SceneManager.LoadScene("CombatTest");
+
+    }
+
+    public void exitGame()
+    {
+
+        Application.Quit();
+
+    }
+
 }
