@@ -29,6 +29,10 @@ public class Slime : MonoBehaviour
     float healthbarWidth;
     Vector2 knockbackVelocity;
     float knockbackTimer = -1.0f;
+
+    [Header("Death Drop Settings")]
+    public List<GameObject> droppableItems = new List<GameObject>();
+    [Range(0.0f, 1.0f)] public float dropItemProbability = 0.5f;
     
     // Components
     Rigidbody2D rb;
@@ -194,6 +198,13 @@ public class Slime : MonoBehaviour
 
         // Setting the velocity to zero
         rb.velocity = Vector2.zero;
+
+        // Dropping a random object
+        if (Random.value <= dropItemProbability || true)
+        {
+            GameObject itemToDrop = droppableItems[Random.Range(0, droppableItems.Count)];
+            Instantiate(itemToDrop, transform.position, Quaternion.identity);
+        }
     }
 
     // Function to move idle

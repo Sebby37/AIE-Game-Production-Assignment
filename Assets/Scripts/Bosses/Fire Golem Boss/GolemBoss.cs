@@ -24,6 +24,8 @@ public class GolemBoss : MonoBehaviour
     [Header("Boss AI Behaviour")]
     public float timeBetweenAttacks = 5.0f;
 
+    int previousAttack = 0;
+
     [Header("Attack 1 Config")]
     public GameObject fireBall;
     public int castFireBallFrame = 0;
@@ -123,7 +125,11 @@ public class GolemBoss : MonoBehaviour
         while (true)
         {
             // Getting a random attack to perform
-            int chosenAttack = Random.Range(1, 4);
+            int chosenAttack = previousAttack;
+            while (chosenAttack == previousAttack)
+                chosenAttack = Random.Range(1, 4);
+
+            previousAttack = chosenAttack;
 
             // Performing the chosen attack
             Attack(chosenAttack);

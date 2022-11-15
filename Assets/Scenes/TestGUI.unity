@@ -1869,6 +1869,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: Slime (8)
       objectReference: {fileID: 0}
+    - target: {fileID: 6599612614025970446, guid: 078c7f2bea19d8f43aeb11b8bff26273, type: 3}
+      propertyPath: dropItemProbability
+      value: 1
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 078c7f2bea19d8f43aeb11b8bff26273, type: 3}
 --- !u!1001 &1247054383

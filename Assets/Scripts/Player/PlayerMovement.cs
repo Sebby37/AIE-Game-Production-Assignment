@@ -337,5 +337,8 @@ public class PlayerMovement : MonoBehaviour
         // Disabling the collider so enemies don't knock the player's deceased carcass around
         Collider2D collider = GetComponent<Collider2D>();
         collider.enabled = false;
+
+        // Setting the player's velocity to zero
+        rb.velocity = Vector2.zero;
     }
 }

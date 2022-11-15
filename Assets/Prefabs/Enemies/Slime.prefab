@@ -338,6 +338,10 @@ MonoBehaviour:
   health: 3
   knockback: 10
   knockbackTime: 0.2
+  droppableItems:
+  - {fileID: 5487657879219161264, guid: e0c732867ca06024f8fd26ae6bb29a97, type: 3}
+  - {fileID: 5174542736689976395, guid: 8961cc9ed3834174fb0cec879a0d9e8b, type: 3}
+  dropItemProbability: 1
 --- !u!1 &6599612614055773881
 GameObject:
   m_ObjectHideFlags: 0
