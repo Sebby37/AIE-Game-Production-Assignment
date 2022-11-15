@@ -8,6 +8,7 @@ TagManager:
   - Fire Ball
   - Enemy
   - Damages Player
+  - Camera
   layers:
   - Default
   - TransparentFX
