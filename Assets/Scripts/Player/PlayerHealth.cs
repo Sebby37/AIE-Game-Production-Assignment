@@ -247,26 +247,40 @@ public class PlayerHealth : MonoBehaviour
 
         }
 
-        //Take Damage from ground thing
-        if (collision.gameObject.CompareTag("Damages Player"))
-        {
-
-            currentHealth -= 5;
-            UpdateHealthUI();
-
-        }
-
         //Take Damage from Fireball
         if (collision.gameObject.CompareTag("Fire Ball"))
         {
 
             FireSpell fireSpell = collision.gameObject.GetComponent<FireSpell>();
+            BossFireBall bossFireBall = collision.gameObject.GetComponent<BossFireBall>();
 
             if (fireSpell != null && !fireSpell.castByPlayer)
             {
                 currentHealth -= 15;
                 UpdateHealthUI();
             }
+
+            if (bossFireBall != null)
+            {
+
+                currentHealth -= 22;
+                UpdateHealthUI();
+
+            }
+
+        }
+
+    }
+
+    private void OnTriggerStay2D(Collider2D collision)
+    {
+
+        //Take Damage from ground thing
+        if (collision.gameObject.CompareTag("Damages Player"))
+        {
+
+            currentHealth -= 10 * Time.deltaTime;
+            UpdateHealthUI();
 
         }
 
