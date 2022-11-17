@@ -30,7 +30,7 @@ public class PlayerHealth : MonoBehaviour
 
     private float moneyCount;
 
-    private bool isDead;
+    public bool isDead;
     public float fadeSpeed;
 
     public GameObject specialText;
@@ -286,7 +286,7 @@ public class PlayerHealth : MonoBehaviour
 
     }
 
-    void Death()
+    public void Death()
     {       
 
         if (isDead == true)
