@@ -113,7 +113,7 @@ public class PlayerHealth : MonoBehaviour
             Death();
         }
 
-        if (deathUI.alpha >= 1 && Input.anyKeyDown)
+        /*if (deathUI.alpha >= 1 && Input.anyKeyDown)
         {
 
             lastScene = LevelChanger.lastSceneName;
@@ -126,7 +126,7 @@ public class PlayerHealth : MonoBehaviour
             SceneManager.LoadScene(lastScene);
 
 
-        }
+        }*/
         
     }
 
@@ -315,6 +315,20 @@ public class PlayerHealth : MonoBehaviour
             
 
         }
+
+    }
+
+    public void Respawn()
+    {
+
+        SceneManager.LoadScene(SceneManager.GetActiveScene().name);
+
+    }
+
+    public void Menu()
+    {
+
+        SceneManager.LoadScene("MenuScreen");
 
     }
 
