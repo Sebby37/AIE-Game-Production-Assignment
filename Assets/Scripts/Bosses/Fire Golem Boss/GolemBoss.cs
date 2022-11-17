@@ -111,6 +111,10 @@ public class GolemBoss : MonoBehaviour
     [ContextMenu("Begin Boss Battle")]
     public void Intro()
     {
+        // Returning if the boss is already active
+        if (state != GolemStates.Inactive)
+            return;
+        
         // Setting the state
         state = GolemStates.Intro;
 
@@ -187,6 +191,9 @@ public class GolemBoss : MonoBehaviour
         // Disabling the collider and setting the velocity to zero
         GetComponent<Collider2D>().enabled = false;
         rb.velocity = Vector2.zero;
+
+        // Disabling the boss AI script
+        enabled = false;
     }
 
     // The intro coroutine
@@ -226,10 +233,11 @@ public class GolemBoss : MonoBehaviour
             yield return new WaitForSeconds(timeBetweenAttacks);
 
             // Getting a random attack to perform
-            int chosenAttack = previousAttack;
-            while (chosenAttack == previousAttack)
-                chosenAttack = Random.Range(1, 4);
+            int chosenAttack;
+            do chosenAttack = Random.Range(1, 4); // This is the only concevable use for a do while loop I could imagine and it still doesn't work, EDIT: It works I was dumb lmao
+            while (chosenAttack == previousAttack);
 
+            // Setting the previous attack to the currently chosen attack
             previousAttack = chosenAttack;
 
             // Performing the chosen attack
