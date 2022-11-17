@@ -208,7 +208,7 @@ public class PlayerMovement : MonoBehaviour
         PlayerHealth playerHealth = GameObject.FindGameObjectWithTag("Player").GetComponent<PlayerHealth>();
 
         // If the player is still and the cast button is pressed, the player state is set to casting and the spell is created
-        if (playerState == PlayerMovementStates.Still && Input.GetMouseButtonDown(1)/* && (playerHealth != null && playerHealth.currentMana > 10)*/)
+        if (playerState == PlayerMovementStates.Still && Input.GetMouseButtonDown(1) && (playerHealth != null && playerHealth.currentMana > 10))
         {
             // Setting the player movement state to casting and instantiating the fire spell
             SetPlayerState(PlayerMovementStates.Casting);
