@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Events;
 
+// Written by Sebastian Cramond
 public class TriggerFunction : MonoBehaviour
 {
     [Header("Tags")]

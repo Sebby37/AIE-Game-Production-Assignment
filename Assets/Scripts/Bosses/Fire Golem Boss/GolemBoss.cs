@@ -114,6 +114,9 @@ public class GolemBoss : MonoBehaviour
         // Returning if the boss is already active
         if (state != GolemStates.Inactive)
             return;
+
+        // Calling the start function
+        Start();
         
         // Setting the state
         state = GolemStates.Intro;
@@ -194,6 +197,9 @@ public class GolemBoss : MonoBehaviour
 
         // Disabling the boss AI script
         enabled = false;
+
+        // Destroying the boss after like 1 seconmd
+        Destroy(gameObject, 2.0f);
     }
 
     // The intro coroutine

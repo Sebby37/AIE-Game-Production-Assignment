@@ -7,19 +7,39 @@ public class ArenaSpawner : MonoBehaviour
 {
     [Header("Enemy Prefabs")]
     public List<GameObject> enemies = new List<GameObject>();
+    public GameObject boss;
 
     [Header("Spawn Config")]
     public Rect spawnBox;
     public float timeBetweenSpawn = 2.5f;
     public float maxEnemies = 5.0f;
+    public int enemiesKilledBeforeBoss = 30;
+    public int enemiesKilledBeforeSpawnRateIncrease = 10;
 
+    int enemiesKilled = 0;
+    bool bossSpawned = false;
     List<GameObject> spawnedEnemies = new List<GameObject>();
+    GameObject spawnedBoss;
     
     // Start is called before the first frame update
     void Start()
     {
         // Beginning the coroutine to spawn enemies
         StartCoroutine(SpawnEnemyCoroutine());
+    }
+
+    private void Update()
+    {
+        // Spawning a boss after a certain amount of enemies have been killed
+        if (enemiesKilled % enemiesKilledBeforeBoss == 0 && enemiesKilled != 0 && !bossSpawned)
+            SpawnBoss();
+
+        // Incrementing the enemies killed counter if the boss is dead
+        if (bossSpawned && spawnedBoss == null)
+        {
+            enemiesKilled++;
+            bossSpawned = false;
+        }
     }
 
     private void OnDrawGizmos()
@@ -46,6 +66,20 @@ public class ArenaSpawner : MonoBehaviour
         spawnedEnemies.Add(spawnedEnemy);
     }
 
+    // Function to spawn the boss
+    void SpawnBoss()
+    {
+        // Setting the boss to be spawned
+        bossSpawned = true;
+
+        // Instantiating the boss
+        spawnedBoss = Instantiate(boss, new Vector2(0.0f, -2.0f), Quaternion.identity);
+
+        // Starting the boss intro
+        GolemBoss bossScript = spawnedBoss.GetComponent<GolemBoss>();
+        bossScript.Intro();
+    }
+
     // Coroutine to run and spawn an enemy
     IEnumerator SpawnEnemyCoroutine()
     {
@@ -57,10 +91,13 @@ public class ArenaSpawner : MonoBehaviour
             // Clearing dead enemies from the list of spawned enemies
             foreach (GameObject enemy in spawnedEnemies.ToArray())
                 if (enemy == null)
+                {
                     spawnedEnemies.Remove(enemy);
+                    enemiesKilled++;
+                }
 
             // Spawning an enemy if the count of enemies spawned is under the maximum
-            if (spawnedEnemies.Count < maxEnemies)
+            if (!bossSpawned && spawnedEnemies.Count < maxEnemies + Mathf.Floor(enemiesKilled / (float) enemiesKilledBeforeSpawnRateIncrease))
                 SpawnEnemy();
         }
     }
