@@ -2,9 +2,11 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
+// Written by Sebastian Cramond
 public class BossFireBall : MonoBehaviour
 {
     [Header("Config")]
+    public float bossDamage = 5.0f;
     public GameObject spawnOnCollision;
     public GameObject caster;
 

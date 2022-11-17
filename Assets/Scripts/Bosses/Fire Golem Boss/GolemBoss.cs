@@ -1,9 +1,11 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
 
 public enum GolemStates
 {
+    Inactive,
     Intro,
     Idle,
     Dead,
@@ -11,15 +13,29 @@ public enum GolemStates
     Attacking
 }
 
+// Written by Sebastian Cramond
 public class GolemBoss : MonoBehaviour
 {
     [Header("State Information")]
-    public GolemStates state = GolemStates.Idle;
-    public bool inBossBattle = false;
+    public GolemStates state = GolemStates.Inactive;
+    public GameObject healthBarCanvas;
 
     [Header("Animation Config")]
     public float animationSpeed = 1.0f;
     public int animationSampleRate = 24;
+
+    [Header("Health Config")]
+    public float health = 30.0f;
+    public int damageBlinks = 4;
+    public float timeBetweenDamageBlinks = 0.125f;
+    public RectTransform healthBar;
+
+    float maxHealth;
+    // I'm using shaders to make the boss blink white when damaged
+    // Because setting the sprite's colour to white gives it it's
+    // Normal colours
+    Shader damagedShader;
+    Shader normalShader;
 
     [Header("Boss AI Behaviour")]
     public float timeBetweenAttacks = 5.0f;
@@ -48,16 +64,24 @@ public class GolemBoss : MonoBehaviour
     public int dashTimes = 3;
     public float timeBetweenDashes = 0.5f;
 
+    SpriteRenderer spriteRenderer;
     Animator animator;
     Rigidbody2D rb;
     
     // Start is called before the first frame update
     void Start()
     {
+        // Getting Components (See what I did there??!?!?!??)
+        spriteRenderer = GetComponent<SpriteRenderer>();
         animator = GetComponent<Animator>();
         rb = GetComponent<Rigidbody2D>();
 
-        StartCoroutine(AttackTimingCoroutine());
+        // Getting shaders for damage and normal
+        damagedShader = Shader.Find("GUI/Text Shader");
+        normalShader = Shader.Find("Sprites/Default");
+
+        // Setting variables
+        maxHealth = health;
     }
 
     // Update is called once per frame
@@ -67,7 +91,7 @@ public class GolemBoss : MonoBehaviour
         animator.SetFloat("Speed", animationSpeed);
 
         // Debug keys to trigger attacks
-        if (true)
+        if (false)
         {
             if (Input.GetKeyDown(KeyCode.Alpha1))
                 Attack(1);
@@ -77,18 +101,27 @@ public class GolemBoss : MonoBehaviour
 
             if (Input.GetKeyDown(KeyCode.Alpha3))
                 Attack(3);
+
+            if (Input.GetKeyDown(KeyCode.R))
+                TakeDamage(1);
         }
     }
 
-    // Function to begin Attack 1
-    [ContextMenu("Intro")]
-    void Intro()
+    // Function to begin the Intro
+    [ContextMenu("Begin Boss Battle")]
+    public void Intro()
     {
         // Setting the state
         state = GolemStates.Intro;
 
         // Triggering the animation
         animator.SetTrigger("Intro");
+
+        // Enabling the health bar canvas
+        healthBarCanvas.SetActive(true);
+
+        // Starting the intro coroutine
+        StartCoroutine(IntroCoroutine());
     }
 
     // Function to attack
@@ -119,11 +152,79 @@ public class GolemBoss : MonoBehaviour
         }
     }
 
+    // Function to take damage
+    void TakeDamage(float takenDamage)
+    {
+        // Returning if ボスは死
+        if (state == GolemStates.Dead || health <= 0)
+            return;
+
+        // Subtracting the health
+        health -= takenDamage;
+
+        // Lowering the health bar
+        float newScale = health >= 0.0f ? health / maxHealth : 0.0f;
+        healthBar.localScale = new Vector3(newScale, 1.0f, 1.0f);
+        healthBar.localPosition = new Vector3(300.0f * newScale - 300.0f, healthBar.localPosition.y, healthBar.localPosition.z);
+
+        // Dying if health is less than or equal to zero
+        if (health <= 0)
+            Die();
+        // Starting the damaged "animation" coroutine if the boss isn't dead
+        else
+            StartCoroutine(DamagedAnimation());
+    }
+
+    // Function to die
+    void Die()
+    {
+        // Setting the state to dead
+        state = GolemStates.Dead;
+
+        // Triggering the death animation
+        animator.SetTrigger("Die");
+
+        // Disabling the collider and setting the velocity to zero
+        GetComponent<Collider2D>().enabled = false;
+        rb.velocity = Vector2.zero;
+    }
+
+    // The intro coroutine
+    IEnumerator IntroCoroutine()
+    {
+        // Waiting for the intro animation to end
+        yield return new WaitForSeconds(1.0f);
+
+        // Setting the state
+        state = GolemStates.Idle;
+
+        // Starting the attack timing coroutine
+        StartCoroutine(AttackTimingCoroutine());
+    }
+
+    // The damage "animation" coroutine
+    IEnumerator DamagedAnimation()
+    {
+        for (int i = 0; i < damageBlinks; i++)
+        {
+            // Setting the shader to the damaged shader and waiting for the next blink
+            spriteRenderer.material.shader = damagedShader;
+            yield return new WaitForSeconds(timeBetweenDamageBlinks);
+
+            // Setting the shader to the normal shader
+            spriteRenderer.material.shader = normalShader;
+            if (i < damageBlinks - 1) yield return new WaitForSeconds(timeBetweenDamageBlinks);
+        }
+    }
+
     // The attack timing coroutine
     IEnumerator AttackTimingCoroutine()
     {
         while (true)
         {
+            // Waiting to start the next attack
+            yield return new WaitForSeconds(timeBetweenAttacks);
+
             // Getting a random attack to perform
             int chosenAttack = previousAttack;
             while (chosenAttack == previousAttack)
@@ -138,12 +239,8 @@ public class GolemBoss : MonoBehaviour
             while (state != GolemStates.Idle)
             {
                 // Golem is attacking
-                print(state.ToString());
                 yield return null;
             }
-
-            // Waiting to start the next attack
-            yield return new WaitForSeconds(timeBetweenAttacks);
         }
     }
 
@@ -160,12 +257,12 @@ public class GolemBoss : MonoBehaviour
         // Instantiating the fireball
         GameObject newFireBall = Instantiate(fireBall, (Vector2) transform.position + fireBallCastOffset, Quaternion.identity);
 
+        // Making sure the fireball ignores collision with the boss
+        Physics2D.IgnoreCollision(newFireBall.GetComponent<Collider2D>(), GetComponent<Collider2D>());
+
         // Waiting until the fireball is to be thrown
         timeToWait = ((float)(throwFireBallFrame - castFireBallFrame) / (float)animationSampleRate) * (1 / animationSpeed);
         yield return new WaitForSeconds(timeToWait);
-
-        // Making sure the fireball ignores collision with the boss
-        Physics2D.IgnoreCollision(newFireBall.GetComponent<Collider2D>(), GetComponent<Collider2D>());
         
         // Throwing the fireball
         BossFireBall fireBallComponent = newFireBall.GetComponent<BossFireBall>();
@@ -238,6 +335,44 @@ public class GolemBoss : MonoBehaviour
             // Delaying for the next dash
             if (i < dashTimes - 1)
                 yield return new WaitForSeconds(timeBetweenDashes);
+        }
+    }
+
+    private void OnTriggerEnter2D(Collider2D collision)
+    {
+        // If the collision is that of the player's sword
+        if (collision.CompareTag("Player Damager") && health > 0)
+        {
+            // Getting the PlayerMovement class, returning if there is none
+            PlayerMovement player = collision.GetComponentInParent<PlayerMovement>();
+            if (player == null) return;
+
+            // Triggering the damage function
+            TakeDamage(player.damage);
+        }
+    }
+
+    private void OnCollisionEnter2D(Collision2D collision)
+    {
+        // Checking if the collider is a fireball
+        if (collision.gameObject.CompareTag("Fire Ball"))
+        {
+            // The damage to take
+            float? damageToTake = null;
+            
+            // Getting the damage from the FireSpell component
+            FireSpell fireBall = collision.gameObject.GetComponent<FireSpell>();
+            if (fireBall != null)
+                damageToTake = fireBall.damage;
+
+            // Getting the damage from the BossFireBall component
+            BossFireBall bossFireBall = collision.gameObject.GetComponent<BossFireBall>();
+            if (bossFireBall != null)
+                damageToTake = bossFireBall.bossDamage;
+
+            // Damaging the boss based on the fireball's damage
+            if (damageToTake != null)
+                TakeDamage((float) damageToTake);
         }
     }
 }

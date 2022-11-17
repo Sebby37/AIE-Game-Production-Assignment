@@ -41,8 +41,9 @@ public class PlayerHealth : MonoBehaviour
 
     // Start is called before the first frame update
     void Start()
-    {        
+    {
 
+        deathUI = specialText.GetComponent<CanvasGroup>();
         currentHealth = maxHealth;
         currentPotion = maxPotion;
         currentMana = maxMana;
