@@ -54,6 +54,8 @@ MonoBehaviour:
   healthBar: {fileID: 2503545462036231543}
   health: 5
   knockbackForce: 15
+  damageBlinks: 2
+  timeBetweenDamageBlinks: 0.083333336
   direction: 0
   animationSpeed: 0.25
 --- !u!212 &2503545460790227838

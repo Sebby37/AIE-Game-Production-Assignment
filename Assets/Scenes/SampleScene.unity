@@ -1037,14 +1037,6 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 0}
     m_Modifications:
-    - target: {fileID: 2503545460790227827, guid: e022e122b393a5f488a43e95b0ea980f, type: 3}
-      propertyPath: damageBlinks
-      value: 2
-      objectReference: {fileID: 0}
-    - target: {fileID: 2503545460790227827, guid: e022e122b393a5f488a43e95b0ea980f, type: 3}
-      propertyPath: timeBetweenDamageBlinks
-      value: 0.083333336
-      objectReference: {fileID: 0}
     - target: {fileID: 2503545460790227832, guid: e022e122b393a5f488a43e95b0ea980f, type: 3}
       propertyPath: m_Name
       value: Golem

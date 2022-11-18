@@ -90,7 +90,7 @@ public class ArenaSpawner : MonoBehaviour
 
             // Clearing dead enemies from the list of spawned enemies
             foreach (GameObject enemy in spawnedEnemies.ToArray())
-                if (enemy == null)
+                if (enemy == null || (enemy != null && !enemy.GetComponent<Collider2D>().enabled))
                 {
                     spawnedEnemies.Remove(enemy);
                     enemiesKilled++;
