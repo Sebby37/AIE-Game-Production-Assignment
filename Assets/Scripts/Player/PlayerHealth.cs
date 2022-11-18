@@ -190,7 +190,7 @@ public class PlayerHealth : MonoBehaviour
 
         if (coin != null)
         {
-            if (coin.gameObject.name == "BronzeCoin")
+            if (coin.gameObject.name.Contains("BronzeCoin"))
             {
 
                 moneyCount += 5;
@@ -201,7 +201,7 @@ public class PlayerHealth : MonoBehaviour
 
             }
 
-            if (coin.gameObject.name == "SilverCoin")
+            if (coin.gameObject.name.Contains("SilverCoin"))
             {
 
                 moneyCount += 10;
@@ -212,7 +212,7 @@ public class PlayerHealth : MonoBehaviour
 
             }
 
-            if (coin.gameObject.name == "GoldCoin")
+            if (coin.gameObject.name.Contains("GoldCoin"))
             {
 
                 moneyCount += 15;
