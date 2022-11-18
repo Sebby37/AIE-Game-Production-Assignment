@@ -16,7 +16,7 @@ public class ArenaSpawner : MonoBehaviour
     public int enemiesKilledBeforeBoss = 30;
     public int enemiesKilledBeforeSpawnRateIncrease = 10;
 
-    int enemiesKilled = 0;
+    public int enemiesKilled = 0;
     bool bossSpawned = false;
     List<GameObject> spawnedEnemies = new List<GameObject>();
     GameObject spawnedBoss;

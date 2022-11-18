@@ -14,8 +14,11 @@ public class Timer : MonoBehaviour
     PlayerHealth playerHealth;
     public Text m_finalTimer;
     private CanvasGroup m_canvasGroup;
-
+    public Text FinalEnemiesKilled;
     private bool checkOnce;
+    int totalenemiesdead = 0;
+    ArenaSpawner enemies;
+    public GameObject spawner;
 
     // Start is called before the first frame update
     void Start()
@@ -28,6 +31,15 @@ public class Timer : MonoBehaviour
         }
 
         m_finalTimer.text = "";
+        FinalEnemiesKilled.text = "";
+
+
+        enemies = spawner.GetComponent<ArenaSpawner>();
+
+    if (enemies == null)
+        {
+            print("Cannot find enemies killed");
+        }
 
     } 
 
@@ -63,6 +75,10 @@ public class Timer : MonoBehaviour
         }
 
         m_timer.text = "";
+
+        totalenemiesdead = enemies.enemiesKilled;
+
+        FinalEnemiesKilled.text = "You killed " + totalenemiesdead + " enemies!";
 
     }
 

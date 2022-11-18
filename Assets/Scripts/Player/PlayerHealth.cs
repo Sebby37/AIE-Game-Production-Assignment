@@ -177,7 +177,7 @@ public class PlayerHealth : MonoBehaviour
         if (healthCrystal != null)
         {
 
-            Debug.Log("May god Eat you");
+            Debug.Log("Collect crystal");
             currentPotion += 5;
             m_potionFill.fillAmount = currentPotion / maxPotion;
             Destroy(healthCrystal.gameObject);
