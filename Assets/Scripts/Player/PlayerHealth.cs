@@ -238,6 +238,14 @@ public class PlayerHealth : MonoBehaviour
 
         }
 
+        if (collision.gameObject.CompareTag("Enemy") && collision.gameObject.name.Contains("Golem"))
+        {
+
+            currentHealth -= 15;
+            UpdateHealthUI();
+
+        }
+
         //Take Damage from Boss
         if (collision.gameObject.CompareTag("Enemy") && collision.gameObject.name.Contains("Boss"))
         {
