@@ -2,7 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-// Written by Sebastian Cramond
+// Written by Sebastian Cramond with advice from... him.
 public class Jerma : MonoBehaviour
 {
     [Header("Jerma")]

@@ -48,12 +48,12 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a89f25dfe1af05a42b3236a9b61d2e55, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  pursuitForce: 2
+  pursuitForce: 3
   pursuitRadius: 5.5
   pursuingPlayer: 0
   healthBar: {fileID: 2503545462036231543}
   health: 5
-  knockbackForce: 15
+  knockbackForce: 17.5
   damageBlinks: 2
   timeBetweenDamageBlinks: 0.083333336
   direction: 0
