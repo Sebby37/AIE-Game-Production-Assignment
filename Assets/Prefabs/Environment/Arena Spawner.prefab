@@ -46,6 +46,8 @@ MonoBehaviour:
   enemies:
   - {fileID: 6599612614025970434, guid: 078c7f2bea19d8f43aeb11b8bff26273, type: 3}
   - {fileID: 9083425905496187505, guid: c49bdaaaf2151604e8cf98bf138fa373, type: 3}
+  - {fileID: 2503545460790227832, guid: e022e122b393a5f488a43e95b0ea980f, type: 3}
+  boss: {fileID: 0}
   spawnBox:
     serializedVersion: 2
     x: -9
@@ -54,3 +56,5 @@ MonoBehaviour:
     height: 10
   timeBetweenSpawn: 2.5
   maxEnemies: 5
+  enemiesKilledBeforeBoss: 30
+  enemiesKilledBeforeSpawnRateIncrease: 10

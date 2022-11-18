@@ -31,7 +31,7 @@ public class ArenaSpawner : MonoBehaviour
     private void Update()
     {
         // Spawning a boss after a certain amount of enemies have been killed
-        if (enemiesKilled % enemiesKilledBeforeBoss == 0 && enemiesKilled != 0 && !bossSpawned)
+        if (boss != null && enemiesKilled % enemiesKilledBeforeBoss == 0 && enemiesKilled != 0 && !bossSpawned)
             SpawnBoss();
 
         // Incrementing the enemies killed counter if the boss is dead
