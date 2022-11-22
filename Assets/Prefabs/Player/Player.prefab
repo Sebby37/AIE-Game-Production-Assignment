@@ -491,8 +491,8 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 0, y: 0}
-  m_AnchoredPosition: {x: 173.2, y: 20}
-  m_SizeDelta: {x: 309.51, y: 34.65}
+  m_AnchoredPosition: {x: 183.3, y: 20}
+  m_SizeDelta: {x: 334.11, y: 34.65}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!222 &5903261676770429365
 CanvasRenderer:
@@ -535,7 +535,7 @@ MonoBehaviour:
     m_HorizontalOverflow: 0
     m_VerticalOverflow: 0
     m_LineSpacing: 1
-  m_Text: 'H - Heal     Q/Shift - Roll
+  m_Text: 'H/1 - Heal     Q/Shift - Roll
 
 '
 --- !u!114 &6603267955219427315
@@ -842,7 +842,7 @@ Transform:
   m_GameObject: {fileID: 1070952285708598940}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: 0.25, z: 0}
-  m_LocalScale: {x: 1.25, y: 1.25, z: 1}
+  m_LocalScale: {x: 1.125, y: 1.125, z: 1}
   m_Children: []
   m_Father: {fileID: 1070952287395484527}
   m_RootOrder: 0
@@ -886,7 +886,7 @@ SpriteRenderer:
   m_LightmapParameters: {fileID: 0}
   m_SortingLayerID: 0
   m_SortingLayer: 0
-  m_SortingOrder: 10
+  m_SortingOrder: 2
   m_Sprite: {fileID: -2311659948842064771, guid: e20e91f5ac23b26458ad90ae9bbd83cf, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0

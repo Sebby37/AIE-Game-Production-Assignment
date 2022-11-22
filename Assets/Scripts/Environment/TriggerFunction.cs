@@ -44,7 +44,7 @@ public class TriggerFunction : MonoBehaviour
         {
             // Triggering the event
             if (onStayEvent != null)
-                onEnterEvent.Invoke();
+                onStayEvent.Invoke();
         }
     }
 
@@ -61,12 +61,14 @@ public class TriggerFunction : MonoBehaviour
     // The onExit function
     void Exit(GameObject collision)
     {
+        print(collision.name);
+        
         // Running the event if the collider's tag is in the list of tags
         if (triggerTags.Contains(collision.tag))
         {
             // Triggering the event
             if (onExitEvent != null)
-                onEnterEvent.Invoke();
+                onExitEvent.Invoke();
         }
     }
 

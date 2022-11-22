@@ -148,7 +148,7 @@ public class PlayerHealth : MonoBehaviour
     public void HealPlayer()
     {
 
-        if (Input.GetKeyDown(KeyCode.H) && m_potionFill.fillAmount > 0)
+        if ((Input.GetKeyDown(KeyCode.H) || Input.GetKeyDown(KeyCode.Alpha1)) && m_potionFill.fillAmount > 0)
         {
 
             m_potionFill.fillAmount = currentPotion / maxPotion;

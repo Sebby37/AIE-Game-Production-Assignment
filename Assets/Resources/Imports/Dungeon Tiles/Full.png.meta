@@ -155,6 +155,9 @@ TextureImporter:
   - first:
       213: 1882732503111705297
     second: Full_50
+  - first:
+      213: -7414427553188987555
+    second: Full_51
   externalObjects: {}
   serializedVersion: 11
   mipmaps:
@@ -1345,7 +1348,7 @@ TextureImporter:
       name: Full_50
       rect:
         serializedVersion: 2
-        x: 192
+        x: 160
         y: 0
         width: 32
         height: 32
@@ -1358,6 +1361,27 @@ TextureImporter:
       bones: []
       spriteID: 1d22e078c3fc02a10800000000000000
       internalID: 1882732503111705297
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Full_51
+      rect:
+        serializedVersion: 2
+        x: 192
+        y: 0
+        width: 32
+        height: 32
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: d5d3d477c69aa1990800000000000000
+      internalID: -7414427553188987555
       vertices: []
       indices: 
       edges: []
