@@ -56,6 +56,7 @@ public class PlayerMovement : MonoBehaviour
     float slashTimer = 0;
 
     [Header("Spell Settings")]
+    public static bool canCastFireball = false;
     public Transform castPoint;
     public GameObject fireSpell;
 
@@ -208,7 +209,7 @@ public class PlayerMovement : MonoBehaviour
         PlayerHealth playerHealth = GameObject.FindGameObjectWithTag("Player").GetComponent<PlayerHealth>();
 
         // If the player is still and the cast button is pressed, the player state is set to casting and the spell is created
-        if (playerState == PlayerMovementStates.Still && Input.GetMouseButtonDown(1) && (playerHealth != null && playerHealth.currentMana > 10))
+        if (canCastFireball && playerState == PlayerMovementStates.Still && Input.GetMouseButtonDown(1) && (playerHealth != null && playerHealth.currentMana > 10))
         {
             // Setting the player movement state to casting and instantiating the fire spell
             SetPlayerState(PlayerMovementStates.Casting);
@@ -340,5 +341,17 @@ public class PlayerMovement : MonoBehaviour
 
         // Setting the player's velocity to zero
         rb.velocity = Vector2.zero;
+    }
+
+    // Function to enable casting a fireball
+    public void EnableFireballCast()
+    {
+        canCastFireball = true;
+    }
+
+    // Function to disable casting a fireball
+    public void DisableFireballCast()
+    {
+        canCastFireball = false;
     }
 }

@@ -37309,6 +37309,17 @@ PrefabInstance:
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 02ce9d2f81824314193c21e9e8064654, type: 3}
+--- !u!114 &2021601231 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 1070952287395484513, guid: 02ce9d2f81824314193c21e9e8064654, type: 3}
+  m_PrefabInstance: {fileID: 2021601230}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 6aa2a50d24f7ae84fa8452cd4e68494e, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1001 &2049464285
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -37533,6 +37544,7 @@ GameObject:
   - component: {fileID: 2111934108}
   - component: {fileID: 2111934107}
   - component: {fileID: 2111934111}
+  - component: {fileID: 2111934112}
   m_Layer: 0
   m_Name: FireStone
   m_TagString: Untagged
@@ -37662,6 +37674,41 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ba4962fffb2db7844ae05dc4831d71b6, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+--- !u!114 &2111934112
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2111934106}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 0d6ac31faba95604e9c88b75dbbd4bdb, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  triggerTags:
+  - Player
+  onEnterEvent:
+    m_PersistentCalls:
+      m_Calls:
+      - m_Target: {fileID: 2021601231}
+        m_TargetAssemblyTypeName: PlayerMovement, Assembly-CSharp
+        m_MethodName: EnableFireballCast
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
+  onStayEvent:
+    m_PersistentCalls:
+      m_Calls: []
+  onExitEvent:
+    m_PersistentCalls:
+      m_Calls: []
 --- !u!1001 &2114525802
 PrefabInstance:
   m_ObjectHideFlags: 0
