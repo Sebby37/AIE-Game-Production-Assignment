@@ -2,6 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
+using UnityEngine.Events;
 
 public enum GolemStates
 {
@@ -63,6 +64,10 @@ public class GolemBoss : MonoBehaviour
     public float dashSpeed = 5.0f;
     public int dashTimes = 3;
     public float timeBetweenDashes = 0.5f;
+
+    [Header("Death Behaviour")]
+    public UnityEvent deathEvent;
+    public float deathEventTriggerDelay = 1.5f;
 
     SpriteRenderer spriteRenderer;
     Animator animator;
@@ -195,11 +200,21 @@ public class GolemBoss : MonoBehaviour
         GetComponent<Collider2D>().enabled = false;
         rb.velocity = Vector2.zero;
 
-        // Disabling the boss AI script
-        enabled = false;
+        // Triggering the death event
+        Invoke("TriggerDeathEvent", deathEventTriggerDelay);
 
         // Destroying the boss after like 1 seconmd
         Destroy(gameObject, 2.0f);
+
+        // Disabling the boss AI script
+        enabled = false;
+    }
+
+    // Function to trigger the death event for use with coroutines
+    void TriggerDeathEvent()
+    {
+        if (deathEvent != null)
+            deathEvent.Invoke();
     }
 
     // The intro coroutine
