@@ -90,9 +90,6 @@ public class PlayerMovement : MonoBehaviour
 
         // Running roll code
         UpdateRoll();
-
-        if (Input.GetKeyDown(KeyCode.F))
-            EnableFireballCast();
     }
 
     // Function to update player movement in 4 directions (Retro Zelda style)
