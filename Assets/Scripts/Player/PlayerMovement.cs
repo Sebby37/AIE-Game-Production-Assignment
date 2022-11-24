@@ -90,6 +90,9 @@ public class PlayerMovement : MonoBehaviour
 
         // Running roll code
         UpdateRoll();
+
+        if (Input.GetKeyDown(KeyCode.F))
+            EnableFireballCast();
     }
 
     // Function to update player movement in 4 directions (Retro Zelda style)
@@ -344,14 +347,21 @@ public class PlayerMovement : MonoBehaviour
     }
 
     // Function to enable casting a fireball
-    public void EnableFireballCast()
+    public static void EnableFireballCast()
     {
         canCastFireball = true;
     }
 
     // Function to disable casting a fireball
-    public void DisableFireballCast()
+    public static void DisableFireballCast()
     {
         canCastFireball = false;
+    }
+
+    // Non static function to enable the fireball cast for context menu stuff\
+    [ContextMenu("Enable Fireball Casting")]
+    void EnableFireballCastNonStatic()
+    {
+        canCastFireball = true;
     }
 }

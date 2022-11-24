@@ -134,6 +134,6 @@ public class FireSpell : MonoBehaviour
         float distanceToMouse = Vector3.Distance(playerPosition, transform.position);
 
         // Adding a force to the fireball
-        rb.AddForce(towardsMouse * curveTowardsMouseForce * (1 / distanceToMouse));
+        rb.AddForce(towardsMouse * curveTowardsMouseForce * (1 / distanceToMouse) * Time.deltaTime);
     }
 }

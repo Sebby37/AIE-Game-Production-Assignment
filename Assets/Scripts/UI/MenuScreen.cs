@@ -28,6 +28,7 @@ public class MenuScreen : MonoBehaviour
     public void beginGame()
     {
 
+        PlayerMovement.DisableFireballCast();
         SceneManager.LoadScene("Tutorial");
 
     }
@@ -35,6 +36,7 @@ public class MenuScreen : MonoBehaviour
     public void arenaGame()
     {
 
+        PlayerMovement.EnableFireballCast();
         SceneManager.LoadScene("CombatTest");
 
     }

@@ -88,7 +88,7 @@ public class Golem : MonoBehaviour
         Vector2 directionToPlayer = (player.transform.position - transform.position).normalized;
 
         // Adding a force towards the player
-        rb.AddForce(directionToPlayer * pursuitForce);
+        rb.AddForce(directionToPlayer * pursuitForce * Time.deltaTime);
     }
 
     // Function to update animations

@@ -160,7 +160,7 @@ MonoBehaviour:
   speed: 10
   lifeTime: 2
   castByPlayer: 0
-  curveTowardsMouseForce: 1
+  curveTowardsMouseForce: 500
   playerPosition: {x: 0, y: 0, z: 0}
   castSpeed: 7
   idleSpeed: 1
